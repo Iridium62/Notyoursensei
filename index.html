@@ -105,10 +105,11 @@
   .brandhero{
     position:relative;
     overflow:hidden;
+    height:clamp(200px, 26vw, 320px);
     background:linear-gradient(180deg, var(--navy-deep) 0%, #081020 55%, #0d1730 100%);
     border-bottom:1px solid var(--border-soft);
   }
-  .brandhero svg{ display:block; width:100%; height:auto; }
+  .brandhero svg{ display:block; width:100%; height:100%; }
   .brandhero-inner{
     position:absolute; inset:0;
     display:flex; align-items:center;
@@ -166,18 +167,54 @@
   .log{
     font-family:var(--mono); font-size:.85rem;
     background:var(--navy-card); border:1px solid var(--border); border-radius:8px;
-    padding:6px 0;
+    display:grid; grid-template-columns:1fr 1fr;
   }
-  .log-line{
-    display:grid; grid-template-columns:56px 1fr; gap:16px;
-    padding:16px 20px; border-bottom:1px solid var(--border-soft);
+  .log-line{ border-bottom:1px solid var(--border-soft); position:relative; }
+  .log-line:last-child{ border-bottom:none; grid-column:1 / -1; }
+  .log-line:nth-child(odd):not(:last-child){ border-right:1px solid var(--border-soft); }
+  @media (max-width:640px){
+    .log{ grid-template-columns:1fr; }
+    .log-line:nth-child(odd):not(:last-child){ border-right:none; }
   }
-  .log-line:last-child{ border-bottom:none; }
-  .log-line .yr{ color:var(--text-faint); }
-  .log-line .cmd{ color:var(--text-dim); display:flex; flex-direction:column; gap:6px; }
-  .log-line .cmd .k{ color:var(--gold); font-size:.95rem; font-weight:600; }
-  .log-line .note{ color:var(--text-dim); font-family:var(--sans); font-size:.82rem; margin-left:.5em; }
-  .log-line .lesson{ color:var(--text-dim); font-family:var(--sans); font-size:.85rem; line-height:1.55; }
+  .log-line summary{
+    cursor:pointer; list-style:none;
+    display:grid; grid-template-columns:32px 1fr; gap:12px;
+    padding:12px 16px; align-items:center;
+    transition:background .15s ease;
+  }
+  .log-line summary:hover{ background:rgba(211,172,102,0.05); }
+  .log-line summary::-webkit-details-marker{ display:none; }
+  .log-line summary::marker{ display:none; }
+  .log-line .yr{
+    position:relative; z-index:1;
+    display:flex; align-items:center; justify-content:center;
+    width:26px; height:26px; margin:0 auto;
+    border:1px solid var(--border); border-radius:50%;
+    background:var(--navy-card);
+    color:var(--text-faint); font-family:var(--mono); font-size:.68rem;
+    transition:border-color .2s ease, color .2s ease, box-shadow .2s ease;
+  }
+  .log-line[open] .yr{
+    color:var(--gold); border-color:var(--gold-deep);
+    box-shadow:0 0 0 3px rgba(211,172,102,0.12);
+  }
+  .log-line:last-child .yr{
+    color:var(--teal); border-color:rgba(111,173,163,0.5);
+  }
+  .log-line .k{ color:var(--gold); font-size:.95rem; font-weight:600; letter-spacing:.005em; }
+  .log-line .note{ color:var(--text-faint); font-family:var(--mono); font-size:.76rem; margin-left:.6em; }
+  .log-line .lesson{
+    color:var(--text-dim); font-family:var(--sans); font-size:.85rem; line-height:1.6;
+    margin:0; padding:0 16px 16px 44px;
+    animation:logReveal .25s ease;
+  }
+  @keyframes logReveal{
+    from{ opacity:0; transform:translateY(-4px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .log-line .lesson{ animation:none; }
+  }
 
   .cred-grid{ display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
   .cred{
@@ -281,6 +318,91 @@
   .fine a{ color:var(--text-faint); }
   .fine a:hover{ color:var(--text-dim); }
   .fine .exit{ display:block; margin-top:14px; font-family:var(--mono); color:var(--gold-deep); font-size:.78rem; }
+
+  /* ---------- path quiz launch button ---------- */
+  #pq-launch{
+    font-family:var(--mono); font-size:.86rem; font-weight:700;
+    color:var(--charcoal); background:var(--gold);
+    border:none; padding:12px 20px; border-radius:4px;
+    cursor:pointer; display:inline-flex; align-items:center; gap:.5em;
+    margin:4px 0 28px;
+  }
+  #pq-launch:hover{ background:#e2bb79; }
+  #pq-launch:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  /* ---------- path quiz ---------- */
+  #path-quiz{ margin-top:36px; }
+  #path-quiz[hidden]{ display:none; }
+  #path-quiz .quiz-shell{
+    border:1px solid var(--border); border-radius:12px;
+    background:var(--navy-card); padding:32px;
+  }
+  #path-quiz .quiz-progress{ display:flex; gap:6px; margin-bottom:24px; }
+  #path-quiz .quiz-progress .dot{
+    flex:1; height:4px; border-radius:2px; background:var(--border-soft);
+    transition:background .2s ease;
+  }
+  #path-quiz .quiz-progress .dot.done{ background:var(--gold); }
+  #path-quiz .quiz-count{
+    font-family:var(--mono); font-size:.74rem; color:var(--text-faint);
+    letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px;
+  }
+  #path-quiz .quiz-q{
+    font-family:var(--display); font-weight:800; font-size:1.2rem;
+    color:var(--cream); margin-bottom:20px; max-width:52ch;
+  }
+  #path-quiz .quiz-opts{ display:flex; flex-direction:column; gap:10px; }
+  #path-quiz .quiz-opt{
+    text-align:left; font-family:var(--sans); font-size:.94rem;
+    color:var(--cream); background:var(--navy-raised);
+    border:1px solid var(--border-soft); border-radius:8px;
+    padding:14px 16px; cursor:pointer; transition:border-color .15s ease, background .15s ease;
+  }
+  #path-quiz .quiz-opt:hover, #path-quiz .quiz-opt:focus-visible{
+    border-color:var(--gold-deep); background:rgba(211,172,102,0.07);
+    outline:none;
+  }
+  #path-quiz .quiz-disclaimer{
+    font-size:.8rem; color:var(--text-faint); margin-top:16px; max-width:56ch;
+  }
+  #path-quiz .quiz-result{ display:none; }
+  #path-quiz .quiz-result.active{ display:block; }
+  #path-quiz .quiz-live{ display:block; }
+  #path-quiz .quiz-live.hidden{ display:none; }
+  #path-quiz .result-ptag{
+    font-family:var(--mono); font-size:.7rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--gold-deep); margin-bottom:8px;
+  }
+  #path-quiz .result-title{ font-size:1.35rem; margin-bottom:10px; }
+  #path-quiz .result-desc{
+    color:var(--text-dim); font-size:.96rem; max-width:56ch; margin-bottom:8px;
+  }
+  #path-quiz .result-bars{ display:flex; flex-direction:column; gap:8px; margin:22px 0 26px; }
+  #path-quiz .bar-row{ display:flex; align-items:center; gap:12px; font-size:.78rem; }
+  #path-quiz .bar-label{
+    width:150px; flex-shrink:0; font-family:var(--mono); color:var(--text-faint);
+  }
+  #path-quiz .bar-track{
+    flex:1; height:6px; background:rgba(255,255,255,0.06);
+    border-radius:3px; overflow:hidden;
+  }
+  #path-quiz .bar-fill{ height:100%; background:var(--gold); width:0%; transition:width .5s ease; }
+  #path-quiz .bar-pct{ width:32px; text-align:right; color:var(--text-faint); font-family:var(--mono); }
+  #path-quiz .result-ctas{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  #path-quiz .retry-link{
+    font-family:var(--mono); font-size:.82rem; color:var(--teal);
+    background:none; border:none; cursor:pointer; padding:13px 4px;
+  }
+  #path-quiz .retry-link:hover{ text-decoration:underline; }
+  #path-quiz .pq-bonus{ margin-top:32px; padding-top:24px; border-top:1px solid var(--border-soft); }
+  #path-quiz .pq-bonus-q{ font-size:1rem; margin-bottom:14px; }
+  @media (prefers-reduced-motion: reduce){
+    #path-quiz .bar-fill, #path-quiz .quiz-progress .dot{ transition:none; }
+  }
+
+
+  #mail-signup .signup-wrap{ display:flex; justify-content:flex-start; margin-top:8px; }
+
 </style>
 
 <header>
@@ -428,16 +550,17 @@
     <h2>How I actually got here</h2>
     <p class="dek">The one head start I actually had was Japanese — I already had JLPT N2 before any of this started. No head start in tech, though: no computer science degree, no connections in IT. Here's the rest of it.</p>
 
+
     <div class="log">
-      <div class="log-line"><span class="yr">›</span><span class="cmd"><span><span class="k">Supermarket Cashier</span> <span class="note">the till</span></span><span class="lesson">Talked to hundreds of randoms a day. Weirdly useful now.</span></span></div>
-      <div class="log-line"><span class="yr">›</span><span class="cmd"><span><span class="k">Mobile Phone Salesman</span> <span class="note">phone shop</span></span><span class="lesson">Learned how to explain tech stuff without sounding like a know-it-all.</span></span></div>
-      <div class="log-line"><span class="yr">›</span><span class="cmd"><span><span class="k">Club Promoter</span> <span class="note">street promo</span></span><span class="lesson">Walking up to strangers on the street every night. Got used to being told no.</span></span></div>
-      <div class="log-line"><span class="yr">›</span><span class="cmd"><span><span class="k">Night Club Bouncer</span> <span class="note">crowd control</span></span><span class="lesson">"Politely" telling grown adults it was time to go home.</span></span></div>
-      <div class="log-line"><span class="yr">›</span><span class="cmd"><span><span class="k">English Teacher</span> <span class="note">small-town schools</span></span><span class="lesson">Best job I've ever had. Just me, some incredible kids, and a small town in the middle of nowhere.</span></span></div>
-      <div class="log-line"><span class="yr">›</span><span class="cmd"><span><span class="k">Recruiter</span> <span class="note">hiring</span></span><span class="lesson">Saw how hiring actually works behind the scenes. Most career advice is just noise.</span></span></div>
-      <div class="log-line"><span class="yr">›</span><span class="cmd"><span><span class="k">IT Helpdesk</span> <span class="note">phone support</span></span><span class="lesson">Where I actually started in tech — fixing stuff fast while someone's stressed out on the phone.</span></span></div>
-      <div class="log-line"><span class="yr">›</span><span class="cmd"><span><span class="k">Network Engineer</span> <span class="note">consulting worldwide</span></span><span class="lesson">This is the real job now — building and keeping networks running for companies around the world.</span></span></div>
-      <div class="log-line"><span class="yr">now</span><span class="cmd"><span><span class="k">Expert-level routing &amp; network design</span> <span class="note">studying, in progress</span></span><span class="lesson">Working toward the hardest cert in the field. Because why not.</span></span></div>
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="11" rx="1"/><line x1="3" y1="13" x2="21" y2="13"/><rect x="9" y="4" width="6" height="5"/></svg></span><span><span class="k">Supermarket Cashier</span> <span class="note">the till</span></span></summary><p class="lesson">Talked to hundreds of randoms a day. Weirdly useful now.</p></details>
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="10" y1="18" x2="14" y2="18"/></svg></span><span><span class="k">Mobile Phone Salesman</span> <span class="note">phone shop</span></span></summary><p class="lesson">Learned how to explain tech stuff without sounding like a know-it-all.</p></details>
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4l6 2V8z"/><path d="M9 8l10-4v16l-10-4"/><line x1="5" y1="16" x2="6" y2="21"/></svg></span><span><span class="k">Club Promoter</span> <span class="note">street promo</span></span></summary><p class="lesson">Walking up to strangers on the street every night. Got used to being told no.</p></details>
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 3v6c0 5-3 8.5-7 11-4-2.5-7-6-7-11V5z"/></svg></span><span><span class="k">Night Club Bouncer</span> <span class="note">crowd control</span></span></summary><p class="lesson">"Politely" telling grown adults it was time to go home.</p></details>
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c-2-1.5-5-2-9-2v15c4 0 7 .5 9 2"/><path d="M12 5c2-1.5 5-2 9-2v15c-4 0-7 .5-9 2"/></svg></span><span><span class="k">English Teacher</span> <span class="note">small-town schools</span></span></summary><p class="lesson">Best job I've ever had. Just me, some incredible kids, and a small town in the middle of nowhere.</p></details>
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6.5"/><line x1="15" y1="15" x2="20.5" y2="20.5"/></svg></span><span><span class="k">Recruiter</span> <span class="note">hiring</span></span></summary><p class="lesson">Saw how hiring actually works behind the scenes. Most career advice is just noise.</p></details>
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="2.5" y="13" width="4" height="6" rx="1.2"/><rect x="17.5" y="13" width="4" height="6" rx="1.2"/><path d="M20 19v1a3 3 0 0 1-3 3h-3"/></svg></span><span><span class="k">IT Helpdesk</span> <span class="note">phone support</span></span></summary><p class="lesson">Where I actually started in tech — fixing stuff fast while someone's stressed out on the phone.</p></details>
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><line x1="7.7" y1="7.7" x2="10.6" y2="16"/><line x1="16.3" y1="7.7" x2="13.4" y2="16"/><line x1="8.4" y1="6" x2="15.6" y2="6"/></svg></span><span><span class="k">Network Engineer</span> <span class="note">consulting worldwide</span></span></summary><p class="lesson">This is the real job now — building and keeping networks running for companies around the world.</p></details>
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v5c0 5.2-3.4 8.7-8 11-4.6-2.3-8-5.8-8-11V6z"/><circle cx="6" cy="8" r="1.6"/><circle cx="18" cy="8" r="1.6"/><circle cx="12" cy="16" r="1.6"/><line x1="7.3" y1="9.1" x2="10.9" y2="14.8"/><line x1="16.7" y1="9.1" x2="13.1" y2="14.8"/></svg></span><span><span class="k">Expert-level routing &amp; network design</span> <span class="note">studying, in progress</span></span></summary><p class="lesson">Working toward the hardest cert in the field. Because why not.</p></details>
     </div>
 
     <p class="dek" style="margin-top:24px; margin-bottom:0;">
@@ -457,6 +580,8 @@
     <div class="eyebrow">pick your route</div>
     <h2>Six ways in — pick the one that's actually yours</h2>
     <p class="dek">Most people land on "teach English" or "learn to code" because they're the two paths anyone's heard of. There's more room than that, and the right one depends on you.</p>
+
+    <button id="pq-launch" type="button">Not sure yet? Take the 2-min quiz →</button>
 
     <div class="paths">
       <div class="path-card">
@@ -480,6 +605,7 @@
           <li>Fixing your resume so it actually reaches a real person instead of getting auto-rejected by a computer</li>
           <li>Interview drilling, rep by rep</li>
           <li>Already work in IT? This path also covers transferring the skills you've already got into a role here</li>
+          <li>Japanese and already living here, comfortable in English, and curious about IT? Same path, same roadmap — this one isn't about visas or relocation at all</li>
         </ul>
         <p style="font-size:.85rem;color:var(--text-faint);">And even if you never go all-in on a full IT career, the skills carry into daily life and travel with you — useful in any job, any country.</p>
       </div>
@@ -528,6 +654,36 @@
         </ul>
       </div>
     </div>
+
+    <section id="path-quiz" hidden>
+  <div class="quiz-shell">
+    <div class="quiz-live" id="pq-live">
+      <div class="quiz-progress" id="pq-progress"></div>
+      <div class="quiz-count" id="pq-count">Question 1 / 10</div>
+      <p class="quiz-q" id="pq-question"></p>
+      <div class="quiz-opts" id="pq-opts"></div>
+      <p class="quiz-disclaimer">This quiz gives you a starting direction, not a visa determination — working holiday eligibility (age, passport, program rules) varies by country and gets confirmed on the call, not here.</p>
+    </div>
+
+    <div class="quiz-result" id="pq-result">
+      <div class="result-ptag" id="pq-result-tag"></div>
+      <h3 class="result-title" id="pq-result-title"></h3>
+      <p class="result-desc" id="pq-result-desc"></p>
+      <div class="result-bars" id="pq-bars"></div>
+      <div class="result-ctas">
+        <a class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Book a call →</a>
+        <button class="retry-link" id="pq-retry">Retake the quiz</button>
+      </div>
+
+      <div class="pq-bonus">
+        <p class="quiz-disclaimer" id="pq-bonus-label">Just for fun — doesn't affect your result above.</p>
+        <p class="quiz-q pq-bonus-q" id="pq-bonus-q">What's actually pulling you to Japan?</p>
+        <div class="quiz-opts" id="pq-bonus-opts"></div>
+        <p class="quiz-q pq-bonus-q" id="pq-bonus-reaction" hidden></p>
+      </div>
+    </div>
+  </div>
+</section>
   </section>
 
   <section>
@@ -551,7 +707,7 @@
       </div>
       <div class="step">
         <div class="step-n">03</div>
-        <div><h3>Execute</h3><p>I help you rework your resume and application
+        <div><h3>Execute</h3><p>I rewrite your resume and application
         materials so an actual person sees them, not just a filter. Then we
         drill interviews — the same way I drill for my own exams, over and
         over until it's automatic.</p></div>
@@ -647,7 +803,7 @@
           <li>Good if you're still deciding between paths</li>
         </ul>
         <a class="btn btn-ghost" href="https://paypal.me/NotyourSensei/120USD" target="_blank" rel="noopener noreferrer" style="margin-top:6px;">Pay &amp; book →</a>
-        <p style="font-size:12px;color:var(--text-dim);margin-top:8px;">Pays via PayPal. You'll get your booking link by email right after — pick your own time, no waiting on me.</p>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:8px;">Pays via PayPal. I'll email you within 24h to lock in a time.</p>
       </div>
       <div class="price-card featured">
         <div class="price-tag">3-session sprint</div>
@@ -660,7 +816,7 @@
           <li>Best for "I want real forward motion inside 90 days"</li>
         </ul>
         <a class="btn btn-primary" href="https://paypal.me/NotyourSensei/299USD" target="_blank" rel="noopener noreferrer" style="margin-top:6px;">Pay &amp; book →</a>
-        <p style="font-size:12px;color:var(--text-dim);margin-top:8px;">Pays via PayPal. You'll get your booking link by email right after — pick your own time, no waiting on me.</p>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:8px;">Pays via PayPal. I'll email you within 24h to lock in a time.</p>
       </div>
     </div>
     <p style="font-size:13px;color:var(--text-dim);margin-top:14px;">If cost is a real barrier — student budget, between jobs, whatever the situation — email me and we'll figure something out.</p>
@@ -702,6 +858,64 @@
       </div>
     </div>
   </section>
+
+  <section id="mail-signup">
+  <div class="eyebrow">stay in the loop</div>
+  <h2>Not ready to book yet? Get the occasional email instead</h2>
+  <p class="dek">New videos, path breakdowns, and whatever's actually useful — no filler, no weekly-newsletter padding.</p>
+
+  <div class="signup-wrap">
+
+<!--Zoho Campaigns Web-Optin Form's Header Code Starts Here-->
+<meta content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<script type="text/javascript" src="https://ma.zoho.com/js/optin.min.js" onload="setupSF('sf3z3c41b3b5a087ee786c89ed874bb0ae2aa920365bf95946a539a18fe2c5e3b43f','ZCFORMVIEW',false,'light',false,'undefined')"></script>
+<script type="text/javascript">
+	function runOnFormSubmit_sf3z3c41b3b5a087ee786c89ed874bb0ae2aa920365bf95946a539a18fe2c5e3b43f(th){
+		/*Before submit, if you want to trigger your event, "include your code here"*/
+	};
+</script>
+<style>
+#customForm > div { margin: 0 auto }
+</style>
+<!--Zoho Campaigns Web-Optin Form's Header Code Ends Here-->
+
+<!--Zoho Campaigns Web-Optin Form Starts Here-->
+<div name="signupFormContainer">
+	<input type="hidden" id="signupTmplName" value="quick_form_10">
+	<input type="hidden" value="0" id="recapThemeOptin">
+	<input type="hidden" id="orgNameFull" value="Not Your Sensei">
+	<div id="sf3z3c41b3b5a087ee786c89ed874bb0ae2aa920365bf95946a539a18fe2c5e3b43f" data-type="signupform">
+		<div id="customForm">
+			<div class="quick_form_10_css" style="background-color: rgb(211, 172, 102); width: 420px; z-index: 2; font-family: Arial; overflow: hidden; background-image: url(https://stratus.campaign-image.jp/images/114f49e3ea2_signup_bg_plain_noborder_1.png); border-color: rgb(211, 172, 102); border-style: solid; border-width: 3px" name="SIGNUP_BODY">
+				<div style="text-align: center">
+					<div style="font-size: 20px; font-family: Arial; font-weight: bold; color: rgb(244, 239, 228); text-align: center; padding: 15px 19px; width: 424px; display: block" id="SIGNUP_HEADING">No sensei required,<br>Just updates.</div>
+					<form method="POST" id="zcampaignOptinForm" style="margin: 0px; width: 100%" action="https://fed-zcmp.maillist-manage.jp/weboptin.zc" target="_zcSignup">
+						<div style="position: relative; width: 380px; height: 30px; margin-top: 20px; display: inline-block">
+							<input type="text" style="font-size: 14px; border-width: 0 0 1px; border-color: rgb(235, 235, 235); border-style: solid; width: 100%; height: 100%; z-index: 4; outline: none; padding: 5px 10px; box-sizing: border-box; color: rgb(255, 255, 255); text-align: left; font-family: &quot;Arial&quot;; background-color: transparent" placeholder="Email" changeitem="SIGNUP_FORM_FIELD" name="CONTACT_EMAIL" id="EMBED_FORM_EMAIL_LABEL">
+						</div>
+						<div style="position: relative; width: 380px; height: 40px; margin: 20px 0 15px; display: inline-block">
+							<input type="button" style="text-align: center; width: 100%; height: 100%; z-index: 5; border: 0px rgb(236, 87, 80); color: rgb(38, 35, 32); border-radius: 2px; cursor: pointer; outline: none; font-size: 14px; font-weight: bold; background-color: rgb(211, 172, 102)" name="SIGNUP_SUBMIT_BUTTON" id="zcWebOptin" value="I'm Not Ready, But Okay">
+						</div>
+						<input type="hidden" id="submitType" name="submitType" value="optinCustomView">
+						<input type="hidden" id="formType" name="formType" value="QuickForm">
+						<input type="hidden" name="zx" id="cmpZuid" value="114f49e3ea2">
+						<input type="hidden" name="zcvers" value="2.0">
+						<input type="hidden" id="mode" name="mode" value="OptinCreateView">
+						<input type="hidden" id="zc_Url" value="fed-zcmp.maillist-manage.jp">
+						<input type="hidden" name="zc_trackCode" id="zc_trackCode" value="ZCFORMVIEW">
+						<input type="hidden" id="zc_formIx" name="zc_formIx" value="3z3c41b3b5a087ee786c89ed874bb0ae2aa920365bf95946a539a18fe2c5e3b43f">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Zoho Campaigns Web-Optin Form Ends Here-->
+
+  </div>
+
+  <p class="signup-note" style="margin-top:12px; font-size:.82rem; color:var(--text-faint); max-width:52ch;">No spam, unsubscribe anytime. This isn't a substitute for the call — it's for people who want to follow along first.</p>
+</section>
 
   <footer>
     <div class="foot-cta">
@@ -755,4 +969,233 @@
       fallbackCopy();
     }
   }
+</script>
+
+<script>
+(function(){
+  const paths = {
+    A: { tag: "Path A", name: "Teach in Japan", desc: "JET, ALT, private schools — the route that gets you in the door fastest, with a clear structure and a real salary from day one." },
+    B: { tag: "Path B", name: "Break into IT", desc: "No CS degree needed. A roadmap of certs and projects sized to your actual hours — skills that carry into any job, any country." },
+    C: { tag: "Path C", name: "Get an introduction", desc: "Not settled on one lane yet? An honest read on what's realistic for you — tech or not — and a door opened if there's a real fit." },
+    D: { tag: "Path D", name: "Working holiday visa", desc: "If your passport qualifies, it's the fastest, lowest-friction way to get boots on the ground — a full year, no sponsor needed." },
+    E: { tag: "Path E", name: "Study abroad on a language visa", desc: "Build the Japanese you actually need while living here full-time, then use the visa as a soft landing into work." },
+    F: { tag: "Path F", name: "Transfer with your current company", desc: "The safest path there is — you keep your employer and your track record instead of a cold job search from scratch." }
+  };
+
+  const questions = [
+    {
+      q: "Where are you starting from right now?",
+      opts: [
+        { t: "I already work for a company that might have a Japan presence or global ops", pts: {F:3} },
+        { t: "I have a teaching background or real interest in education", pts: {A:3} },
+        { t: "I'm early-career or between things, open to something new", pts: {B:1, D:1} },
+        { t: "None of these quite fit — I want to explore broadly", pts: {C:2} },
+        { t: "I'm Japanese, already living here, comfortable in English, and curious about IT", pts: {B:3} }
+      ]
+    },
+    {
+      q: "What's your timeline?",
+      opts: [
+        { t: "I want to be in Japan within the next few months", pts: {D:2, E:1} },
+        { t: "A 6–12 month runway to prepare works fine", pts: {B:2, A:1} },
+        { t: "I'm planning 1–2 years out, want to do it right", pts: {E:2, F:1} },
+        { t: "No fixed timeline — depends on the right opportunity", pts: {C:2} }
+      ]
+    },
+    {
+      q: "How do you want to fund the move?",
+      opts: [
+        { t: "I'd rather earn a salary from day one", pts: {A:2, F:2} },
+        { t: "I can self-fund a year to build skills or language first", pts: {E:3} },
+        { t: "I want the lowest-cost way to just get there", pts: {D:3} },
+        { t: "Depends what the actual opportunity looks like", pts: {C:1, B:1} }
+      ]
+    },
+    {
+      q: "How does a working holiday visa look for you, specifically?",
+      opts: [
+        { t: "My country qualifies and I'm in the age range — very open to it", pts: {D:3} },
+        { t: "My country qualifies, but I'd rather build toward something more permanent", pts: {D:1, B:1} },
+        { t: "My country doesn't qualify, or I'm over the age cutoff", pts: {F:1, E:2} },
+        { t: "Not sure if I qualify — I'd want that confirmed before deciding", pts: {C:2} }
+      ]
+    },
+    {
+      q: "What kind of work pulls at you?",
+      opts: [
+        { t: "Tech — systems, troubleshooting, building things", pts: {B:3} },
+        { t: "Teaching, mentoring, working with students", pts: {A:3} },
+        { t: "Honestly not sure — I want an outside read on what fits", pts: {C:3} },
+        { t: "Something else entirely (sales, hospitality, etc.)", pts: {C:2} }
+      ]
+    },
+    {
+      q: "Where's your Japanese level right now?",
+      opts: [
+        { t: "Beginner — I want serious immersion time to build it", pts: {E:2} },
+        { t: "Conversational, I can function day to day", pts: {A:1, F:1, B:1} },
+        { t: "Not fluent, but confident I'll pick it up fast on the ground", pts: {D:2} },
+        { t: "Doesn't matter yet, I need direction first", pts: {C:2} }
+      ]
+    },
+    {
+      q: "What matters most to you in how you make this move?",
+      opts: [
+        { t: "Safety — I don't want to gamble on this", pts: {F:3} },
+        { t: "Speed — I want boots on the ground ASAP", pts: {D:2, E:1} },
+        { t: "Long-term career growth", pts: {B:2, A:1} },
+        { t: "Flexibility — keep my options open", pts: {C:3} }
+      ]
+    },
+    {
+      q: "If it didn't work out immediately, how would you feel?",
+      opts: [
+        { t: "Fine — I have an employer and a life to go back to either way", pts: {F:2} },
+        { t: "Disappointed, but it was a low-cost bet worth taking", pts: {D:2} },
+        { t: "I'd want a plan B lined up before the visa runs out", pts: {E:2} },
+        { t: "I'd rather have someone in my corner the whole way through", pts: {C:2} }
+      ]
+    },
+    {
+      q: "Are you thinking about this as just you, or with a partner/family in the picture?",
+      opts: [
+        { t: "Just me, no complications", pts: {D:2} },
+        { t: "Me for now, but I'd want a partner to join eventually", pts: {D:1, E:1} },
+        { t: "I have a partner who'd be moving with me", pts: {F:2, A:1} },
+        { t: "I have a partner and/or kids — stability matters more than speed", pts: {F:3, A:1} }
+      ]
+    },
+    {
+      q: "In one word, what are you actually looking for?",
+      opts: [
+        { t: "Stability", pts: {F:2, A:1} },
+        { t: "Skills", pts: {B:3} },
+        { t: "Speed", pts: {D:3} },
+        { t: "Direction", pts: {C:3} }
+      ]
+    }
+  ];
+
+  let current = 0;
+  const scores = { A:0, B:0, C:0, D:0, E:0, F:0 };
+
+  const quizSection = document.getElementById('path-quiz');
+  const launchBtn = document.getElementById('pq-launch');
+  const liveEl = document.getElementById('pq-live');
+  const resultEl = document.getElementById('pq-result');
+  const progressEl = document.getElementById('pq-progress');
+  const countEl = document.getElementById('pq-count');
+  const qEl = document.getElementById('pq-question');
+  const optsEl = document.getElementById('pq-opts');
+
+  launchBtn.addEventListener('click', () => {
+    quizSection.hidden = false;
+    launchBtn.hidden = true;
+    quizSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  function renderProgress(){
+    progressEl.innerHTML = '';
+    for (let i = 0; i < questions.length; i++){
+      const d = document.createElement('div');
+      d.className = 'dot' + (i < current ? ' done' : '');
+      progressEl.appendChild(d);
+    }
+  }
+
+  function renderQuestion(){
+    renderProgress();
+    const q = questions[current];
+    countEl.textContent = `Question ${current+1} / ${questions.length}`;
+    qEl.textContent = q.q;
+    optsEl.innerHTML = '';
+    q.opts.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt.t;
+      btn.addEventListener('click', () => select(opt));
+      optsEl.appendChild(btn);
+    });
+  }
+
+  function select(opt){
+    Object.entries(opt.pts).forEach(([k,v]) => { scores[k] += v; });
+    current++;
+    if (current < questions.length){
+      renderQuestion();
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult(){
+    liveEl.classList.add('hidden');
+    resultEl.classList.add('active');
+
+    const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+    const top = paths[sorted[0][0]];
+    const max = sorted[0][1] || 1;
+
+    document.getElementById('pq-result-tag').textContent = top.tag;
+    document.getElementById('pq-result-title').textContent = top.name;
+    document.getElementById('pq-result-desc').textContent = top.desc;
+
+    const barsEl = document.getElementById('pq-bars');
+    barsEl.innerHTML = '';
+    sorted.forEach(([key, score]) => {
+      const pct = Math.round((score / max) * 100);
+      const row = document.createElement('div');
+      row.className = 'bar-row';
+      row.innerHTML = `
+        <div class="bar-label">${paths[key].name}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+        <div class="bar-pct">${pct}%</div>
+      `;
+      barsEl.appendChild(row);
+    });
+
+    renderBonus();
+  }
+
+  const bonusOptions = [
+    { t: "The food, obviously", reaction: "Correct answer. Book the call, we'll workshop the visa around your ramen budget." },
+    { t: "I've watched too much anime and won't pretend otherwise", reaction: "Respect the honesty. Still a valid entry vector — just not one we script on the call." },
+    { t: "The trains genuinely run on time and it broke something in my brain", reaction: "Same. It's a slow-motion personality change and there's no support group for it yet." },
+    { t: "Honestly? A cooler life than the one I've got", reaction: "Fair — that's most people who book. This call is step one of that, not the fantasy version." }
+  ];
+
+  function renderBonus(){
+    const bonusOptsEl = document.getElementById('pq-bonus-opts');
+    const bonusReactionEl = document.getElementById('pq-bonus-reaction');
+    const bonusQEl = document.getElementById('pq-bonus-q');
+    bonusOptsEl.innerHTML = '';
+    bonusReactionEl.hidden = true;
+    bonusQEl.hidden = false;
+    bonusOptions.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt.t;
+      btn.addEventListener('click', () => {
+        bonusOptsEl.hidden = true;
+        bonusQEl.hidden = true;
+        bonusReactionEl.textContent = opt.reaction;
+        bonusReactionEl.hidden = false;
+      });
+      bonusOptsEl.appendChild(btn);
+    });
+  }
+
+  function reset(){
+    current = 0;
+    Object.keys(scores).forEach(k => scores[k] = 0);
+    resultEl.classList.remove('active');
+    liveEl.classList.remove('hidden');
+    document.getElementById('pq-bonus-opts').hidden = false;
+    document.getElementById('pq-bonus-reaction').hidden = true;
+    renderQuestion();
+  }
+
+  document.getElementById('pq-retry').addEventListener('click', reset);
+  renderQuestion();
+})();
 </script>
