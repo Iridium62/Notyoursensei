@@ -65,10 +65,10 @@
     },
     {
       "@type": "Question",
-      "name": "What happens right after I pay for a session?",
+      "name": "Is there an age limit for breaking into IT?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "You'll get an email within 24 hours to lock in a time — I'm one person doing this alongside the day job and the podcast, so it's not instant, but it's fast."
+        "text": "No fixed cutoff — the people I work with span roughly their late teens to their late 40s. The path can take more thought the further along your career you are, mainly because there's more to weigh and less runway to experiment. That's rarely a dealbreaker on its own, and it's exactly the kind of thing worth talking through. The free 15-minute chat is a low-risk way to get an honest read on what's realistic for you, whatever your age."
       }
     }
   ]
@@ -241,11 +241,20 @@
   .reassure{ margin-top:14px; font-size:.82rem; color:var(--text-faint); }
   .fork{
     margin-top:22px; padding-top:18px; border-top:1px solid var(--border-soft);
-    font-size:.86rem; color:var(--text-dim);
-    display:flex; flex-wrap:wrap; gap:8px 20px;
+    display:grid; grid-template-columns:1fr 1fr; gap:10px;
+  }
+  @media (max-width:600px){
+    .fork{ grid-template-columns:1fr; }
+  }
+  .fork span{
+    display:flex; align-items:center; flex-wrap:wrap; gap:.5em;
+    font-size:.88rem; color:var(--text-dim);
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:8px; padding:9px 14px;
   }
   .fork b{ color:var(--cream); font-weight:600; }
-  .fork a{ color:var(--gold); font-family:var(--mono); font-size:.82rem; }
+  .fork a{ color:var(--gold); font-family:var(--mono); font-size:.86rem; font-weight:700; }
+  .fork a:hover{ color:#e2bb79; }
 
   /* ---------- sections ---------- */
   section{ padding:54px 0; border-top:1px solid var(--border-soft); scroll-margin-top:76px; }
@@ -474,9 +483,6 @@
   #path-quiz .quiz-result.active{ display:block; }
   #path-quiz .quiz-live{ display:block; }
   #path-quiz .quiz-live.hidden{ display:none; }
-  #path-quiz .quiz-fork{ display:block; }
-  #path-quiz .quiz-fork.hidden{ display:none; }
-  #path-quiz .quiz-fork .quiz-opts{ margin-bottom:4px; }
   #path-quiz .result-ptag{
     font-family:var(--mono); font-size:.7rem; letter-spacing:.1em;
     text-transform:uppercase; color:var(--gold-deep); margin-bottom:8px;
@@ -488,28 +494,17 @@
   #path-quiz .result-why{
     color:var(--teal); font-size:.86rem; margin-bottom:8px;
   }
-  #path-quiz .also-considered{ margin:20px 0 26px; }
-  #path-quiz .also-considered[hidden]{ display:none; }
-  #path-quiz .also-label{
-    font-family:var(--mono); font-size:.72rem; color:var(--text-faint);
-    text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px;
+  #path-quiz .result-bars{ display:flex; flex-direction:column; gap:8px; margin:22px 0 26px; }
+  #path-quiz .bar-row{ display:flex; align-items:center; gap:12px; font-size:.78rem; }
+  #path-quiz .bar-label{
+    width:150px; flex-shrink:0; font-family:var(--mono); color:var(--text-faint);
   }
-  #path-quiz .also-list{
-    list-style:none; margin:0; padding:0;
-    display:flex; flex-direction:column; gap:9px;
+  #path-quiz .bar-track{
+    flex:1; height:6px; background:rgba(255,255,255,0.06);
+    border-radius:3px; overflow:hidden;
   }
-  #path-quiz .also-item{
-    display:flex; align-items:baseline; gap:10px;
-    font-family:var(--sans); font-size:.88rem; color:var(--text-faint);
-    padding-bottom:9px; border-bottom:1px solid var(--border-soft);
-  }
-  #path-quiz .also-item:last-child{ border-bottom:none; padding-bottom:0; }
-  #path-quiz .also-rank{
-    font-family:var(--mono); font-size:.72rem; color:var(--text-faint);
-    flex-shrink:0; width:26px;
-  }
-  #path-quiz .also-name{ color:var(--text-dim); }
-  #path-quiz .also-name.strong{ color:var(--cream); font-weight:600; }
+  #path-quiz .bar-fill{ height:100%; background:var(--gold); width:0%; transition:width .5s ease; }
+  #path-quiz .bar-pct{ width:32px; text-align:right; color:var(--text-faint); font-family:var(--mono); }
   #path-quiz .result-ctas{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
   #path-quiz .retry-link{
     font-family:var(--mono); font-size:.82rem; color:var(--teal);
@@ -518,6 +513,9 @@
   #path-quiz .retry-link:hover{ text-decoration:underline; }
   #path-quiz .pq-bonus{ margin-top:32px; padding-top:24px; border-top:1px solid var(--border-soft); }
   #path-quiz .pq-bonus-q{ font-size:1rem; margin-bottom:14px; }
+  @media (prefers-reduced-motion: reduce){
+    #path-quiz .bar-fill, #path-quiz .quiz-progress .dot{ transition:none; }
+  }
 
 
   #mail-signup .signup-wrap{ display:flex; justify-content:flex-start; margin-top:8px; }
@@ -657,10 +655,12 @@
       <a class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Book a call →</a>
       <a class="btn btn-ghost" href="#podcast">Hear the podcast</a>
     </div>
-    <p class="reassure">Pick a slot instantly — no payment, no catch, no assistant screening you first. It's just me on that calendar. Prefer email instead? Write <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> <button type="button" class="copy-email-btn" onclick="copyEmail(this)" style="font-family:var(--mono);font-size:.78rem;color:var(--teal);background:none;border:1px solid rgba(111,173,163,0.35);border-radius:3px;padding:2px 8px;cursor:pointer;margin-left:4px;">copy</button></p>
+    <p class="reassure">Pick a slot instantly — no payment, no catch. Prefer email instead? Write <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> <button type="button" class="copy-email-btn" onclick="copyEmail(this)" style="font-family:var(--mono);font-size:.78rem;color:var(--teal);background:none;border:1px solid rgba(111,173,163,0.35);border-radius:3px;padding:2px 8px;cursor:pointer;margin-left:4px;">copy</button></p>
     <p class="fork">
       <span><b>Here for the career move?</b> Keep scrolling — that's this page.</span>
+      <span><b>Not sure which path is yours?</b> <a href="#path-quiz" id="fork-take-quiz">Take the 2-min quiz →</a></span>
       <span><b>Just here for the stories?</b> <a href="#youtube">Not Your Sensei, by Night →</a></span>
+      <span><b>Already here, thinking about going home?</b> <a href="#path-quiz" id="fork-going-home">Skip to that →</a></span>
     </p>
   </section>
 
@@ -671,6 +671,9 @@
 
 
     <div class="log">
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="11" rx="1"/><line x1="3" y1="13" x2="21" y2="13"/><rect x="9" y="4" width="6" height="5"/></svg></span><span><span class="k">Supermarket Cashier</span> <span class="note">the till</span></span></summary><p class="lesson">Talked to hundreds of randoms a day. Weirdly useful now.</p></details>
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="10" y1="18" x2="14" y2="18"/></svg></span><span><span class="k">Mobile Phone Salesman</span> <span class="note">phone shop</span></span></summary><p class="lesson">Learned how to explain tech stuff without sounding like a know-it-all.</p></details>
+      <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10v4l6 2V8z"/><path d="M9 8l10-4v16l-10-4"/><line x1="5" y1="16" x2="6" y2="21"/></svg></span><span><span class="k">Club Promoter</span> <span class="note">street promo</span></span></summary><p class="lesson">Walking up to strangers on the street every night. Got used to being told no.</p></details>
       <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l7 3v6c0 5-3 8.5-7 11-4-2.5-7-6-7-11V5z"/></svg></span><span><span class="k">Night Club Bouncer</span> <span class="note">crowd control</span></span></summary><p class="lesson">"Politely" telling grown adults it was time to go home.</p></details>
       <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5c-2-1.5-5-2-9-2v15c4 0 7 .5 9 2"/><path d="M12 5c2-1.5 5-2 9-2v15c-4 0-7 .5-9 2"/></svg></span><span><span class="k">English Teacher</span> <span class="note">small-town schools</span></span></summary><p class="lesson">Best job I've ever had. Just me, some incredible kids, and a small town in the middle of nowhere.</p></details>
       <details class="log-line"><summary><span class="yr"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><line x1="15" y1="15" x2="20.5" y2="20.5"/></svg></span><span><span class="k">Recruiter</span> <span class="note">hiring</span></span></summary><p class="lesson">Saw how hiring actually works behind the scenes. Most career advice is just noise.</p></details>
@@ -695,7 +698,7 @@
 
   <section id="paths">
     <div class="eyebrow">pick your route</div>
-    <h2>Seven ways in — pick the one that's actually yours</h2>
+    <h2>Eight ways in — pick the one that's actually yours</h2>
     <p class="dek">Most people land on "teach English" or "learn to code" because they're the two paths anyone's heard of. There's more room than that, and the right one depends on you.</p>
 
     <button id="pq-launch" type="button">Not sure yet? Take the 2-min quiz →</button>
@@ -799,24 +802,73 @@
         </ul>
         </div>
       </details>
+      <details class="path-card">
+        <summary><span class="ptag">Path H</span><span class="ptitle">Try it on a digital nomad visa</span></summary>
+        <div class="path-body">
+        <p>Japan's digital nomad visa lets you live here for up to six months while working remotely for a foreign employer or your own overseas clients — no Japan-based sponsor, no quitting your job first. It's a narrow door: roughly ¥10 million a year (about $68,000 USD) in non-Japanese income, a passport from one of the roughly 50 eligible countries, and private health insurance for the whole stay, since this visa doesn't get you onto Japan's national health insurance. It's also one-shot — non-renewable, and once it's up you're outside Japan for about six months before you can apply again.</p>
+        <ul>
+          <li>Whether your income, passport, and employer situation actually clear the bar — worth checking before building any plan around this</li>
+          <li>Using the six months as a real trial run — a neighborhood, a routine, whether daily life here holds up — instead of a long vacation</li>
+          <li>What it doesn't do: it isn't a path to residency by itself and won't convert into a work visa on its own — that still means one of the other paths</li>
+          <li>Lining the six months up so it sets up whichever path (teaching, IT, a transfer) you'd actually want next, instead of resetting to zero when you leave</li>
+          <li>Spouses and children can come too, but each has to clear the income and insurance bar on their own — it isn't a dependent visa</li>
+        </ul>
+        <p style="font-size:.85rem;color:var(--text-faint);">Best fit if you already clear that income bar remotely and nothing else on this page quite fits yet. Not a substitute for immigration advice on your specific situation.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="split-card" style="margin-top:22px; max-width:640px;">
+      <h3 style="color:var(--teal); font-family:var(--sans); font-size:.95rem; margin-bottom:10px;">Already living here?</h3>
+      <p style="font-size:.92rem; color:var(--text-dim); margin:0;">These eight are all about getting in. If you're already here and quietly wondering whether it's time to go home — homesick, a parent who needs you back, or just worn down and not sure if that's temporary — that's a different conversation. The quiz below has a direct route to it.</p>
     </div>
 
     <section id="path-quiz" hidden>
   <div class="quiz-shell">
-    <div class="quiz-fork" id="pq-fork">
-      <p class="quiz-q">First — are you already living in Japan, or still working on getting there?</p>
-      <div class="quiz-opts">
-        <button class="quiz-opt" id="pq-fork-moving" type="button">Still planning the move</button>
-        <button class="quiz-opt" id="pq-fork-resident" type="button">Already living in Japan</button>
+    <div class="quiz-live" id="pq-live">
+      <div class="quiz-progress" id="pq-progress"></div>
+      <div class="quiz-count" id="pq-count">Question 1 / 12</div>
+      <p class="quiz-disclaimer" id="pq-context" style="margin-top:0; margin-bottom:14px;"></p>
+      <p class="quiz-q" id="pq-question"></p>
+      <div class="quiz-opts" id="pq-opts"></div>
+      <p class="quiz-disclaimer">This quiz gives you a starting direction, not a visa determination — working holiday eligibility and digital nomad visa eligibility (age, passport, income, program rules) vary by country and get confirmed on the call, not here.</p>
+    </div>
+
+    <div class="quiz-result" id="pq-home-result">
+      <div class="result-ptag">Already here</div>
+      <h3 class="result-title">That's not failure. That's data.</h3>
+      <p class="result-desc" id="pq-home-intro">I went home for a stretch myself before any of this stuck, so this isn't a lecture. What's closest to what's actually going on?</p>
+      <p class="result-desc" id="pq-home-followup-prompt" hidden style="margin-top:4px;">What's actually driving that, if you had to guess?</p>
+      <div class="quiz-opts" id="pq-home-opts"></div>
+      <p class="result-desc" id="pq-home-reaction" hidden style="margin-top:4px;"></p>
+      <div class="result-ctas" style="margin-top:22px;">
+        <a class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Talk it through →</a>
+        <button class="retry-link" id="pq-home-retry">Retake the quiz</button>
       </div>
     </div>
 
-    <div class="quiz-live hidden" id="pq-live">
-      <div class="quiz-progress" id="pq-progress"></div>
-      <div class="quiz-count" id="pq-count">Question 1 / 10</div>
-      <p class="quiz-q" id="pq-question"></p>
-      <div class="quiz-opts" id="pq-opts"></div>
-      <p class="quiz-disclaimer" id="pq-disclaimer">This quiz gives you a starting direction, not a visa determination — working holiday eligibility (age, passport, program rules) varies by country and gets confirmed on the call, not here.</p>
+    <div class="quiz-result" id="pq-pivot-result">
+      <div class="result-ptag">Already here</div>
+      <h3 class="result-title">Into something new — like what?</h3>
+      <p class="result-desc" id="pq-pivot-intro">You're already in Japan, so the visa and relocation questions don't apply — this is just about the roadmap from where you're standing. What's actually pulling at you?</p>
+      <div class="quiz-opts" id="pq-pivot-opts"></div>
+      <div id="pq-pivot-body" hidden></div>
+    </div>
+
+    <div class="quiz-result" id="pq-itoutcome-result">
+      <div class="result-ptag">Already here</div>
+      <h3 class="result-title">Already in IT — what's the actual goal?</h3>
+      <p class="result-desc">Good problem to have — you already flagged it's something specific. Pick the one closest to it below.</p>
+      <div class="quiz-opts" id="pq-itoutcome-opts"></div>
+      <div id="pq-itoutcome-body" hidden></div>
+    </div>
+
+    <div class="quiz-result" id="pq-settling-result">
+      <div class="result-ptag">Already here</div>
+      <h3 class="result-title">Still finding your footing?</h3>
+      <p class="result-desc">Normal, and usually not a big deal either way. What's actually going on?</p>
+      <div class="quiz-opts" id="pq-settling-opts"></div>
+      <div id="pq-settling-body" hidden></div>
     </div>
 
     <div class="quiz-result" id="pq-result">
@@ -824,10 +876,9 @@
       <h3 class="result-title" id="pq-result-title"></h3>
       <p class="result-desc" id="pq-result-desc"></p>
       <p class="result-why" id="pq-result-why"></p>
-      <div class="also-considered" id="pq-also" hidden>
-        <p class="also-label" id="pq-also-label">Behind that</p>
-        <ol class="also-list" id="pq-also-list"></ol>
-      </div>
+      <p class="result-why" id="pq-result-forward" style="margin-top:2px;"></p>
+      <p class="result-desc" id="pq-result-secondary" style="margin-top:10px;"></p>
+      <div class="result-bars" id="pq-bars"></div>
       <div class="result-ctas">
         <a class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Book a call →</a>
         <button class="retry-link" id="pq-retry">Retake the quiz</button>
@@ -906,31 +957,6 @@
     </div>
   </section>
 
-  <section id="results">
-    <div class="eyebrow">not just theory</div>
-    <h2>A few people this has actually worked for</h2>
-    <p class="dek">Happy to walk through any of these in more detail on the call.</p>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-n">01</div>
-        <div><h3>Desktop support → project coordinator, PM next</h3><p>Coached him through positioning his helpdesk experience for a step up, not just a lateral move. He got his PMP certification and moved laterally within the same company into a project coordinator role. A full project manager position is the next stop.</p></div>
-      </div>
-      <div class="step">
-        <div class="step-n">02</div>
-        <div><h3>English teacher → network engineering</h3><p>A teacher who wanted into IT. Pointed her at the CCNA instead of a generic "learn to code" detour. She's now working with a network engineer I know personally.</p></div>
-      </div>
-      <div class="step">
-        <div class="step-n">03</div>
-        <div><h3>Network+ and Azure → hired onto my own team</h3><p>Told her Network+ was the right first cert for where she was starting from. She stacked a Windows Azure certification on top, applied, and ended up getting hired as one of my actual colleagues.</p></div>
-      </div>
-      <div class="step">
-        <div class="step-n">04</div>
-        <div><h3>Supermarket worker → Azure cloud administrator</h3><p>Started in retail with zero IT background, built up to an Azure Cloud Administrator certification, and drilled mock interviews with me before applying anywhere. Ended up visiting Japan but taking the job in the UK instead. Not every path here ends in Japan, and that's fine.</p></div>
-      </div>
-    </div>
-  </section>
-
   <section id="faq">
     <div class="eyebrow">before you book</div>
     <h2>Questions people actually ask</h2>
@@ -954,8 +980,8 @@
         <p>Depends on the path and how much time you put in weekly — there's no overnight version of this. Some routes (like JET) run on fixed yearly cycles no amount of momentum can compress; others move faster. The Transition Sprint is built around getting real forward motion inside 90 days — a plan, applications out, momentum — not a guarantee you'll be relocated by then. The free chat will give you an honest read on your specific timeline.</p>
       </details>
       <details class="faq-item">
-        <summary>What happens right after I pay?</summary>
-        <p>You'll get an email from me within 24 hours to lock in a time — I'm one person doing this alongside the day job and the podcast, so it's not instant, but it's fast.</p>
+        <summary>Is there an age limit for breaking into IT?</summary>
+        <p>No fixed cutoff — the people I work with span roughly their late teens to their late 40s. The path can take more thought the further along your career you are, mainly because there's more to weigh and less runway to experiment. That's rarely a dealbreaker on its own, and it's exactly the kind of thing worth talking through. The free 15-minute chat is a low-risk way to get an honest read on what's realistic for you, whatever your age.</p>
       </details>
     </div>
   </section>
@@ -982,9 +1008,8 @@
         <div class="price-name">Recon call</div>
         <div class="price-amt">$120 <span>/ 45 min</span></div>
         <ul>
-          <li>Live call, 45 minutes</li>
+          <li>Live call, recorded for you</li>
           <li>Written action plan after</li>
-          <li>One paid session, and I still follow up afterward to make sure it actually lands</li>
           <li>Good if you're still deciding between paths</li>
         </ul>
         <a class="btn btn-ghost" href="https://paypal.me/NotyourSensei/120USD" target="_blank" rel="noopener noreferrer" style="margin-top:6px;">Pay &amp; book →</a>
@@ -998,8 +1023,6 @@
           <li>Recon + Route + Execute, spaced over your pace</li>
           <li>Resume / application pass</li>
           <li>One mock interview</li>
-          <li>I'll stay in touch between sessions to keep you accountable</li>
-          <li>I'll dig up specific info for you along the way — company details, whatever comes up</li>
           <li>Best for "I want real forward motion inside 90 days"</li>
         </ul>
         <a class="btn btn-primary" href="https://paypal.me/NotyourSensei/299USD" target="_blank" rel="noopener noreferrer" style="margin-top:6px;">Pay &amp; book →</a>
@@ -1108,7 +1131,7 @@
     <div class="foot-cta">
       <div>
         <h2>Still reading? Book the call.</h2>
-        <p>A quick call to find out if this is actually the right route for you — no pitch, no pressure, and no one but me on the other end.</p>
+        <p>A quick call to find out if this is actually the right route for you — no pitch, no pressure.</p>
         <p style="font-size:.82rem;color:var(--text-faint);margin-top:10px;">Prefer email? Write <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> <button type="button" class="copy-email-btn" onclick="copyEmail(this)" style="font-family:var(--mono);font-size:.76rem;color:var(--teal);background:none;border:1px solid rgba(111,173,163,0.35);border-radius:3px;padding:2px 8px;cursor:pointer;margin-left:4px;">copy</button></p>
       </div>
       <a class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Book a call →</a>
@@ -1161,19 +1184,42 @@
 <script>
 (function(){
   const paths = {
-    A: { tag: "Path A", name: "Teach in Japan", desc: "You want structure and a paycheck from day one, not a leap of faith. JET, ALT, and private-school routes come with a visa, some housing help, and a clear first year — the tradeoff is less control over exactly where you're placed. If that trade sounds fine to you, this is usually the fastest door in.", note: "would help if you want structure and a paycheck from day one, even with less say over where you land" },
-    B: { tag: "Path B", name: "Break into IT", desc: "You're after real, transferable skills, not just a way to get here. No CS degree, no industry connections needed — that's the exact spot I started from — so the roadmap is built around certs and hands-on projects sized to the hours you actually have, not some bootcamp timeline. Slower to get moving than teaching, but it opens more doors once you're in.", note: "would help if you want real transferable skills, not just the fastest way in" },
-    C: { tag: "Path C", name: "Get an introduction", desc: "You're not locked into one lane yet, and that's fine — most people aren't. This path is about getting an honest read on what's actually realistic for you, tech or not, before you commit to a roadmap. If there's a real opening I know about, I'll make the introduction; if not, you'll at least know which path is actually worth committing to. This usually isn't a final destination — it's how most people figure out which of the other paths here is actually theirs, then move into it.", note: "would help if you're not locked into one lane yet — most people use it to find out which path above is actually the fit, then move into that one" },
-    D: { tag: "Path D", name: "Working holiday visa", desc: "Speed matters more to you than a guaranteed landing spot. If your passport qualifies, this is the lowest-friction way to just get here — no employer, no sponsor, a full year to figure out the rest. The catch is it's temporary and usually a one-shot deal, so it only pays off if you use the year to build toward something instead of just traveling it away — most people who take this route are using the year to work toward Teaching, IT, or a company transfer, not just traveling on it.", note: "would help if speed matters more to you than a guaranteed landing spot — often the bridge into Teaching, IT, or a company transfer once you're actually here" },
-    E: { tag: "Path E", name: "Study abroad on a language visa", desc: "You want real time in the country before committing to a career move, and you're fine self-funding or saving up to get it. A student visa buys you daily immersion no app or class back home comes close to, and doubles as a soft landing into the job search once you're ready. It isn't a work visa though, so you need a next step lined up before it runs out — usually Teaching, IT, or a company transfer, whichever the immersion time actually points you toward.", note: "would help if you want real time in-country before committing — usually a bridge into Teaching, IT, or a company transfer once the visa's up" },
-    F: { tag: "Path F", name: "Transfer with your current company", desc: "You'd rather keep what you've already built than start over from zero. If your company has a Japan presence, or could, an internal transfer keeps your employer, your track record, and usually has the visa handled for you. It's the safest path there is — the catch is it isn't open to everyone, and you won't know until you actually ask.", note: "would help if you'd rather keep what you've already built than start over from scratch" },
-    G: { tag: "Path G", name: "Study a degree, or intern, here", desc: "You're thinking bigger than a quick move — a real degree, a research program, or an internship that could turn into something permanent. It's the slower, credential-heavy route, usually with a longer lead time for applications, scholarships, or a professor's sponsorship. I went through this route myself, and I can put you in front of my own contacts on the school and internship side.", note: "would help if you're thinking bigger than a quick move — a real credential, not just a landing" }
+    A: { tag: "Path A", name: "Teach in Japan", desc: "You want structure and a paycheck from day one, not a leap of faith. JET, ALT, and private-school routes come with a visa, some housing help, and a clear first year — the tradeoff is less control over exactly where you're placed. If that trade sounds fine to you, this is usually the fastest door in." },
+    B: { tag: "Path B", name: "Break into IT", desc: "You're after real, transferable skills, not just a way to get here. No CS degree, no industry connections needed — that's the exact spot I started from — so the roadmap is built around certs and hands-on projects sized to the hours you actually have, not some bootcamp timeline. Slower to get moving than teaching, but it opens more doors once you're in." },
+    C: { tag: "Path C", name: "Get an introduction", desc: "You're not locked into one lane yet, and that's fine — most people aren't. This path is about getting an honest read on what's actually realistic for you, tech or not, before you commit to a roadmap. If there's a real opening I know about, I'll make the introduction; if not, you'll at least know which path is actually worth committing to." },
+    D: { tag: "Path D", name: "Working holiday visa", desc: "Speed matters more to you than a guaranteed landing spot. If your passport qualifies, this is the lowest-friction way to just get here — no employer, no sponsor, a full year to figure out the rest. The catch is it's temporary and usually a one-shot deal, so it only pays off if you use the year to build toward something instead of just traveling it away." },
+    E: { tag: "Path E", name: "Study abroad on a language visa", desc: "You want real time in the country before committing to a career move, and you're fine self-funding or saving up to get it. A student visa buys you daily immersion no app or class back home comes close to, and doubles as a soft landing into the job search once you're ready. It isn't a work visa though, so you need a next step lined up before it runs out." },
+    F: { tag: "Path F", name: "Transfer with your current company", desc: "You'd rather keep what you've already built than start over from zero. If your company has a Japan presence, or could, an internal transfer keeps your employer, your track record, and usually has the visa handled for you. It's the safest path there is — the catch is it isn't open to everyone, and you won't know until you actually ask." },
+    G: { tag: "Path G", name: "Study a degree, or intern, here", desc: "You're thinking bigger than a quick move — a real degree, a research program, or an internship that could turn into something permanent. It's the slower, credential-heavy route, usually with a longer lead time for applications, scholarships, or a professor's sponsorship. I went through this route myself, and I can put you in front of my own contacts on the school and internship side." },
+    H: { tag: "Path H", name: "Digital nomad visa", desc: "Nothing else here pulled ahead clearly, but you already clear the income bar for Japan's digital nomad visa — roughly ¥10M a year from a non-Japanese employer or your own overseas clients. That makes it the fastest legal way to just get here and test it, rather than committing to a full plan before you've even landed. It's six months, non-renewable, and doesn't convert into anything longer on its own — think of it as the trial run, not the destination." }
   };
 
-  const questionsMoving = [
+  const forwardLooks = {
+    A: "Once you're actually teaching, it's worth being deliberate about what comes next — know roughly what similar teaching roles pay before your first renewal conversation, and keep pushing your Japanese past N3 toward N2, since both open doors a first contract alone won't.",
+    B: "Once you're in, it's worth being deliberate rather than reactive — know roughly what your specialization pays in Japan before you're ever offered a number, and pick certifications on purpose instead of collecting whichever ones sound impressive.",
+    C: "Whichever door actually opens, the same habits help afterward — know what the role should pay in Japan before you negotiate, keep pushing your Japanese, and pick any certifications deliberately rather than randomly.",
+    D: "Use the year itself to build toward this: research what your target field actually pays here, keep leveling up your Japanese, and treat certifications or a portfolio as part of the plan, not an afterthought once the year's already ticking down.",
+    E: "While you're studying, it's worth researching what your target field actually pays in Japan and lining up certifications or portfolio work alongside the language, so the job search when the visa's ending isn't starting from zero.",
+    F: "Once the transfer's through, it's worth checking your new comp against the local market rather than assuming the transfer numbers were generous — and your existing standing internally is usually the easiest lever for whatever you want to level up next.",
+    G: "Whichever way the program goes, it's worth treating the internship or research work as the credential-building step it is — know what the field actually pays in Japan and let that shape which offers are worth taking.",
+    H: "Even on a six-month trial, it's worth using the time to actually research what your field pays here and what roles look like longer-term, so the six months sets up whatever comes after instead of just resetting."
+  };
+
+  const questions = [
     {
-      topic: "where you're starting from",
-      q: "Where are you starting from right now?",
+      topic: "where you are right now",
+      q: "First — where are you right now?",
+      opts: [
+        { t: "Outside Japan — Japan's where I'm trying to get to", pts: {} },
+        { t: "Already living in Japan, and looking to move into something new here", branch: "pivot" },
+        { t: "Already living in Japan, working in IT, and after something specific — a raise, a promotion, a different specialization, etc.", branch: "it-outcome" },
+        { t: "Already living in Japan, but not sure how it's going — a raise question, or just not sure if it's clicking yet", branch: "settling" },
+        { t: "Already living in Japan, and honestly thinking about going home — for a while, or for good", branch: "home" }
+      ]
+    },
+    {
+      topic: "your background",
+      q: "The rest of this assumes you're moving here from abroad. What's your background right now?",
       opts: [
         { t: "I already work for a company that might have a Japan presence or global ops", pts: {F:3} },
         { t: "I have a teaching background or real interest in education", pts: {A:3} },
@@ -1184,7 +1230,7 @@
     },
     {
       topic: "your timeline",
-      q: "What's your timeline?",
+      q: "What's your timeline to actually land in Japan?",
       opts: [
         { t: "I want to be in Japan within the next few months", pts: {D:2, E:1} },
         { t: "A 6–12 month runway to prepare works fine", pts: {B:2, A:1, G:1} },
@@ -1213,6 +1259,26 @@
       ]
     },
     {
+      topic: "remote income eligibility",
+      q: "Do you already have remote work — a foreign employer, or your own overseas clients — paying you above roughly ¥10 million a year (about $68,000 USD)?",
+      opts: [
+        { t: "Yes, comfortably above that", pts: {}, dnv: true },
+        { t: "Close, but not quite there yet", pts: {} },
+        { t: "No, nothing like that", pts: {} },
+        { t: "Not sure / doesn't apply to me", pts: {} }
+      ]
+    },
+    {
+      topic: "how much remote work and travel actually matter to you",
+      q: "How much does being able to work remotely, or travel internationally, actually matter to you?",
+      opts: [
+        { t: "A lot — flexibility and travel are big priorities", pts: {H:2, C:1} },
+        { t: "Some — nice to have, not a dealbreaker", pts: {C:1} },
+        { t: "Not really — I'd rather be fully rooted in one job, one place", pts: {F:2, A:1} },
+        { t: "Depends entirely on the opportunity", pts: {C:1} }
+      ]
+    },
+    {
       topic: "the kind of work that pulls at you",
       q: "What kind of work pulls at you?",
       opts: [
@@ -1235,18 +1301,17 @@
     },
     {
       topic: "what matters most to you",
-      q: "If one thing had to go right, what would it be?",
+      q: "What matters most to you in how you make this move?",
       opts: [
-        { t: "A visa and job locked in before I even land — I don't want to gamble on this", pts: {F:3, A:1} },
-        { t: "Getting there as fast as possible, even if the landing spot isn't perfect", pts: {D:3, E:1} },
-        { t: "Real, transferable skills and a career I can actually grow — not just a landing spot", pts: {B:2, G:2} },
-        { t: "Real time living there before I commit to a career move", pts: {E:3} },
-        { t: "Keeping every option open until I know what's actually realistic for me", pts: {C:3} }
+        { t: "Safety — I don't want to gamble on this", pts: {F:3} },
+        { t: "Speed — I want to get there as fast as possible", pts: {D:2, E:1} },
+        { t: "Long-term career growth", pts: {B:2, A:1, G:1} },
+        { t: "Flexibility — keep my options open", pts: {C:3} }
       ]
     },
     {
       topic: "how you'd handle it not working out right away",
-      q: "If it didn't work out immediately, how would you feel?",
+      q: "If your move didn't work out right away, how would you feel?",
       opts: [
         { t: "Fine — I have an employer and a life to go back to either way", pts: {F:2} },
         { t: "Disappointed, but it was a low-cost bet worth taking", pts: {D:2} },
@@ -1256,7 +1321,7 @@
     },
     {
       topic: "your partner/family situation",
-      q: "Are you thinking about this as just you, or with a partner/family in the picture?",
+      q: "Making this move — is it just you, or with a partner/family in the picture?",
       opts: [
         { t: "Just me, no complications", pts: {D:2} },
         { t: "Me for now, but I'd want a partner to join eventually", pts: {D:1, E:1} },
@@ -1277,255 +1342,19 @@
     }
   ];
 
-  // "Already living in Japan" gate question — decides which of the two resident
-  // sub-tracks (job-seeker vs. already-employed) to run.
-  const residentGate = {
-    q: "What are you doing in Japan right now?",
-    opts: [
-      { t: "Teaching English, or working in education already", field: "teaching" },
-      { t: "Already working in IT here", field: "it" },
-      { t: "Working in something unrelated to teaching or IT — service, hospitality, admin, etc.", field: "other" },
-      { t: "Student, job-seeking, or here on a language/student visa — not employed yet", field: null }
-    ]
-  };
-
-  // Resident + not yet employed here: same A/B/C (Teach / IT / Get an introduction)
-  // result as before, just minus the employment-status question (now the gate above).
-  const questionsResidentJobseeker = [
-    {
-      topic: "what's pulling you toward a change",
-      q: "What's pulling you toward a change right now?",
-      opts: [
-        { t: "I want to lean further into teaching or education", pts: {A:3} },
-        { t: "I want real, transferable skills — especially in tech", pts: {B:3} },
-        { t: "I already work in IT here and want to move roles or companies", pts: {B:2} },
-        { t: "Honestly not sure yet — I want an outside read on what's realistic", pts: {C:3} }
-      ]
-    },
-    {
-      topic: "your Japanese level",
-      q: "Where's your Japanese level right now?",
-      opts: [
-        { t: "Fluent or near-native — N1 or equivalent", pts: {B:2, A:1} },
-        { t: "Business-level — N2 or comparable", pts: {B:2, A:1} },
-        { t: "Conversational — N3-ish, still improving", pts: {A:2, C:1} },
-        { t: "Limited — I get by day to day, that's about it", pts: {C:2} }
-      ]
-    },
-    {
-      topic: "the kind of job you want",
-      q: "What kind of role are you actually looking for?",
-      opts: [
-        { t: "Fully remote — for a company outside Japan, or a remote-friendly one", pts: {B:3} },
-        { t: "Global mobility — travel, an international team, room to move around", pts: {B:2, C:1} },
-        { t: "Something stable and local — steady hours, a clear structure", pts: {A:2} },
-        { t: "Not sure yet — I want the options explained to me", pts: {C:3} }
-      ]
-    },
-    {
-      topic: "the actual goal",
-      q: "What's the actual goal here?",
-      opts: [
-        { t: "Build a long-term career I can grow here", pts: {B:2, A:1} },
-        { t: "More freedom — remote work, more money, more flexibility", pts: {B:3} },
-        { t: "A more stable, structured job than what I've got now", pts: {A:3} },
-        { t: "I just want someone to tell me what's realistic", pts: {C:3} }
-      ]
-    }
-  ];
-
-  // Resident + already employed here: no A/B/C — this track scores five possible
-  // "next move" outcomes instead (certs, lateral move, language, raise, switch).
-  const questionsResidentEmployed = [
-    {
-      topic: "the kind of role you want",
-      q: "What kind of role are you actually looking for?",
-      opts: [
-        { t: "Fully remote — for a company outside Japan, or a remote-friendly one", pts: {LATERAL:3} },
-        { t: "Global mobility — travel, an international team, room to move around", pts: {LATERAL:2, CERT:1} },
-        { t: "Something stable and local — steady hours, a clear structure", pts: {CERT:2, RAISE:1} },
-        { t: "Not sure yet — I want the options explained to me", pts: {CERT:1, LATERAL:1} }
-      ]
-    },
-    {
-      topic: "your Japanese level",
-      q: "Where's your Japanese level right now?",
-      opts: [
-        { t: "Fluent or near-native — N1 or equivalent", pts: {CERT:1} },
-        { t: "Business-level — N2 or comparable", pts: {CERT:1} },
-        { t: "Conversational — N3-ish, still improving", pts: {LANG:3} },
-        { t: "Limited — I get by day to day, that's about it", pts: {LANG:4} }
-      ]
-    },
-    {
-      topic: "your visa or status",
-      q: "What's your status in Japan?",
-      rawKey: "visa",
-      opts: [
-        { t: "Permanent Residency (PR), or I'm a Japanese national", pts: {}, raw: "pr" },
-        { t: "Company-sponsored work visa", pts: {}, raw: "work" },
-        { t: "Spouse or dependent visa", pts: {}, raw: "dependent" },
-        { t: "Student visa, or something else / not sure", pts: {}, raw: "other" }
-      ]
-    },
-    {
-      topic: "how long you see yourself staying",
-      q: "Longer term, where do you see yourself?",
-      rawKey: "longterm",
-      opts: [
-        { t: "Staying in Japan long-term — this is home", pts: {}, raw: "stay" },
-        { t: "Staying for now, but open to relocating abroad down the line", pts: {}, raw: "transfer" },
-        { t: "Ready to start looking for work outside Japan", pts: {}, raw: "abroad" },
-        { t: "Not sure yet — depends how things go", pts: {}, raw: "unsure" }
-      ]
-    },
-    {
-      topic: "your company's global reach",
-      q: "Does your company have offices or operations outside Japan?",
-      rawKey: "globalCompany",
-      opts: [
-        { t: "Yes — it's a multinational, or has teams elsewhere", pts: {}, raw: "yes" },
-        { t: "No — it's Japan-only", pts: {}, raw: "no" },
-        { t: "Not sure", pts: {}, raw: "unsure" }
-      ]
-    },
-    {
-      topic: "Japanese company or foreign company",
-      q: "Is your employer a Japanese company or a foreign/multinational one?",
-      rawKey: "companyType",
-      opts: [
-        { t: "A Japanese company — traditional, seniority-based", pts: {}, raw: "jp" },
-        { t: "A foreign company or multinational — Japan office, or remote for an overseas HQ", pts: {}, raw: "foreign" },
-        { t: "Foreign-owned on paper, but run like a Japanese company in practice", pts: {}, raw: "mixed" },
-        { t: "Not sure / doesn't really apply", pts: {}, raw: "unsure" }
-      ]
-    },
-    {
-      topic: "how your pay compares",
-      q: "Roughly what's your annual salary here, before tax?",
-      rawKey: "salary",
-      opts: [
-        { t: "Under ¥3,000,000", pts: {}, raw: "under3" },
-        { t: "¥3,000,000 – ¥5,000,000", pts: {}, raw: "3to5" },
-        { t: "¥5,000,000 – ¥7,000,000", pts: {}, raw: "5to7" },
-        { t: "¥7,000,000 – ¥10,000,000", pts: {}, raw: "7to10" },
-        { t: "¥10,000,000 – ¥15,000,000", pts: {}, raw: "10to15" },
-        { t: "Over ¥15,000,000", pts: {}, raw: "over15" }
-      ]
-    },
-    {
-      topic: "your overtime",
-      q: "How's your overtime?",
-      rawKey: "overtime",
-      opts: [
-        { t: "Way too much — I'm running on empty", pts: {SWITCH:2}, raw: "toomuch" },
-        { t: "A fair amount, it's manageable", pts: {CERT:1}, raw: "manageable" },
-        { t: "Not much — I could actually take on more (hours or side income)", pts: {CERT:2, LATERAL:1}, raw: "room" }
-      ]
-    },
-    {
-      topic: "your biggest motivation",
-      q: "If one thing changed, what would actually fix this for you?",
-      opts: [
-        { t: "More money", pts: {RAISE:3, SWITCH:2} },
-        { t: "Less overtime, more work-life balance", pts: {SWITCH:2, LATERAL:1} },
-        { t: "A different location — city, region, or country", pts: {LATERAL:2} },
-        { t: "More remote or flexible work", pts: {LATERAL:3} },
-        { t: "A better work environment or company culture", pts: {SWITCH:3} },
-        { t: "Something else, or a mix of these", pts: {} }
-      ]
-    }
-  ];
-
-  // Rough industry salary benchmarks (annual, pre-tax yen) used only to gauge
-  // "above / about / below average" — not exact figures, just a directional check.
-  // Teaching: Interac ALT pay ¥2.4–3.0M (interacnetwork.com) and comparable dispatch/eikaiwa
-  // ranges (premiertefl.com); IT: National Tax Agency's 2024 private-sector survey puts the
-  // information/communications sector average at ¥6.595M (e-housing.jp); Other: same survey's
-  // all-industry average, ¥4.775M.
-  const salaryBenchmarks = { teaching: 2800000, it: 6595000, other: 4775000 };
-  const salaryBandMidpoints = {
-    under3: 2250000, '3to5': 4000000, '5to7': 6000000,
-    '7to10': 8500000, '10to15': 12500000, over15: 20000000
-  };
-
-  // Four tiers, not three: someone at 1.2x the field average and someone at 3x it
-  // (senior engineer / foreign-company pay, e.g. Google Japan/Indeed-type packages)
-  // shouldn't both just get lumped into "above average" with the same advice.
-  function computePaySignal(field, band){
-    const avg = salaryBenchmarks[field] || salaryBenchmarks.other;
-    const mid = salaryBandMidpoints[band];
-    if (mid == null) return 'about';
-    const ratio = mid / avg;
-    if (ratio < 0.9) return 'below';
-    if (ratio <= 1.15) return 'about';
-    if (ratio <= 1.75) return 'above';
-    return 'wayAbove';
-  }
-
-  const paySignalPts = {
-    wayAbove: { LATERAL:3, CERT:1 },
-    above: { RAISE:1, LATERAL:2 },
-    about: { CERT:2 },
-    below: { SWITCH:3, RAISE:1 }
-  };
-
-  const visaCaveats = {
-    pr: "You've got PR or citizenship, so nothing here is visa-gated — every option below is fully open to you.",
-    work: "You're on a company-sponsored work visa, so changing employers means lining up sponsorship at the new company before you resign — very doable, just needs the right order of operations.",
-    dependent: "On a dependent visa, double check your specific work permissions before acting on any of this — some dependent visas cap hours or need a separate activity permit for full-time work.",
-    other: "Worth confirming exactly what your current visa allows before acting on any of this — some student or other visas restrict work hours or need a status change first."
-  };
-
-  // Foreign/multinational companies in Japan tend to pay roughly 10–20% more than
-  // Japanese firms and lean less on face-time overtime culture (Robert Walters,
-  // Japan Handbook) — this doesn't change the pay-benchmark math above, but it
-  // does change how strongly "change companies" applies.
-  const companyNotes = {
-    jp: "Foreign companies here tend to pay 10–20% more and lean less on face-time overtime culture — worth having on the radar if a move is on the table.",
-    mixed: "Foreign-owned but run Japanese-style is common — don't assume the usual foreign-company pay or overtime upside comes with it.",
-    foreign: "You're already at a foreign company, so most of the usual pay/overtime upside of switching company type is already banked here.",
-    unsure: ""
-  };
-
-  const recPaths = {
-    CERT: { tag: "Next Move", name: "Level up your field expertise or certifications", desc: "You're in a decent spot, but the ceiling on your current skill set is close. The fastest way to open up better roles and better pay from here is building the field expertise your industry actually rewards, or stacking a real certification — either way, something that signals more responsibility, not just another line on the resume. It also sets up an easier raise conversation later — real leverage, not walking in empty-handed.", note: "would help you qualify for higher-paying, higher-responsibility roles — and gives you something concrete to point to if you ask for a raise later" },
-    LATERAL: { tag: "Next Move", name: "Move laterally into a higher-potential role", desc: "You're not underpaid or overworked so much as underused. A sideways move — same level, a role with more upside, more visibility, or a better trajectory — usually does more for you right now than grinding for a promotion where you are.", note: "would help you land in a better-fit role without leaving the company or the country" },
-    LANG: { tag: "Next Move", name: "Push your Japanese to N2+", desc: "Everything else on this list gets easier once your Japanese clears N2. It's the single biggest thing capping which roles, raises, and companies are even on the table for you right now.", note: "would help unlock roles, raises, and companies that are off the table right now because of the language bar" },
-    RAISE: { tag: "Next Move", name: "Ask for a raise", desc: "By what you've told me, you're giving more than you're being paid for. That's not a reason to quit quietly — it's a reason to make the ask directly, with the numbers to back it up. If you don't have real field expertise, a recent cert, or expanded scope to point to yet, that's worth lining up first — it's the difference between asking and actually negotiating.", note: "would help close the pay gap — easier to land once you've got real field expertise, a cert, or expanded scope backing the ask" },
-    SWITCH: { tag: "Next Move", name: "Change companies", desc: "Between the pay and the hours, this company isn't matching what you're putting in. Sometimes the fastest raise is a new employer, not a negotiation with the old one.", note: "would help fix a pay or overtime problem this employer isn't going to solve on its own" },
-    PR: { tag: "Next Move", name: "Start building toward Permanent Residency", desc: "You've told me Japan is the long-term plan, but you're not on PR yet — that gap is worth closing on purpose, not by default. There's the standard 10-year track (5 of those years on a qualifying work status) and a real fast-track through the Highly Skilled Professional points system — 80+ points gets you eligible after 1 year, 70–79 after 3. Worth mapping which one you're actually closer to before deciding on anything else on this list.", note: "would help remove the visa strings attached to basically everything else on this list" },
-    ABROAD: { tag: "Next Move", name: "Start a job search outside Japan", desc: "You're not sold on Japan being the long-term plan, and your current company isn't the one that's going to move you elsewhere — so this is a from-scratch search, not a request to HR. Different game than job hunting here; worth going in with an actual plan instead of cold-applying.", note: "would help if staying in Japan long-term isn't actually where this is headed" },
-    TRANSFER: { tag: "Next Move", name: "Ask about an internal transfer", desc: "Your company already has a footprint outside Japan, so this is worth raising before anything more drastic. An internal transfer keeps your tenure and your track record, and it's usually the easiest version of relocation there is — visa and logistics handled for you. Worth finding out who to actually ask before assuming it's not on the table.", note: "would help you relocate without starting your career over from zero" }
-  };
-
-  const disclaimerMoving = "This quiz gives you a starting direction, not a visa determination — working holiday eligibility (age, passport, program rules) varies by country and gets confirmed on the call, not here.";
-  const disclaimerResident = "This quiz gives you a starting direction, not a job offer — the specifics of what fits your situation get confirmed on the call, not here.";
-
-  function scoresFor(keys){
-    const o = {};
-    keys.forEach(k => { o[k] = 0; });
-    return o;
-  }
-
-  let track = 'moving';
-  let resultMode = 'path'; // 'path' (A/B/C via `paths`) or 'recommendation' (via `recPaths`)
-  let employedField = null; // 'teaching' | 'it' | 'other' — set by the resident gate
-  let rawAnswers = {}; // non-scored answers (visa, salary band, overtime) for the employed track
-  let activeQuestions = questionsMoving;
-  let activeKeys = ['A','B','C','D','E','F','G'];
   let current = 0;
-  let scores = scoresFor(activeKeys);
+  const scores = { A:0, B:0, C:0, D:0, E:0, F:0, G:0, H:0 };
   let selections = [];
+  let dnvEligible = false;
 
   const quizSection = document.getElementById('path-quiz');
   const launchBtn = document.getElementById('pq-launch');
-  const forkEl = document.getElementById('pq-fork');
-  const forkMovingBtn = document.getElementById('pq-fork-moving');
-  const forkResidentBtn = document.getElementById('pq-fork-resident');
-  const disclaimerEl = document.getElementById('pq-disclaimer');
   const liveEl = document.getElementById('pq-live');
   const resultEl = document.getElementById('pq-result');
+  const homeResultEl = document.getElementById('pq-home-result');
+  const pivotResultEl = document.getElementById('pq-pivot-result');
+  const itOutcomeResultEl = document.getElementById('pq-itoutcome-result');
+  const settlingResultEl = document.getElementById('pq-settling-result');
   const progressEl = document.getElementById('pq-progress');
   const countEl = document.getElementById('pq-count');
   const qEl = document.getElementById('pq-question');
@@ -1534,81 +1363,33 @@
   launchBtn.addEventListener('click', () => {
     quizSection.hidden = false;
     launchBtn.hidden = true;
-    forkEl.classList.remove('hidden');
-    liveEl.classList.add('hidden');
-    resultEl.classList.remove('active');
     quizSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  function startTrack(which){
-    track = which;
-    forkEl.classList.add('hidden');
-    liveEl.classList.remove('hidden');
-    resultEl.classList.remove('active');
-    if (which === 'resident'){
-      disclaimerEl.textContent = disclaimerResident;
-      renderGate();
-    } else {
-      resultMode = 'path';
-      activeQuestions = questionsMoving;
-      activeKeys = ['A','B','C','D','E','F','G'];
-      disclaimerEl.textContent = disclaimerMoving;
-      scores = scoresFor(activeKeys);
-      current = 0;
-      selections = [];
-      renderQuestion();
-    }
-  }
-
-  forkMovingBtn.addEventListener('click', () => startTrack('moving'));
-  forkResidentBtn.addEventListener('click', () => startTrack('resident'));
-
-  function renderGate(){
-    progressEl.innerHTML = '';
-    countEl.textContent = 'Quick check first';
-    qEl.textContent = residentGate.q;
-    optsEl.innerHTML = '';
-    residentGate.opts.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'quiz-opt';
-      btn.textContent = opt.t;
-      btn.addEventListener('click', () => {
-        if (opt.field){
-          startEmployed(opt.field);
-        } else {
-          startJobseeker();
-        }
-      });
-      optsEl.appendChild(btn);
+  const takeQuizLink = document.getElementById('fork-take-quiz');
+  if (takeQuizLink){
+    takeQuizLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      quizSection.hidden = false;
+      launchBtn.hidden = true;
+      quizSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 
-  function startJobseeker(){
-    resultMode = 'path';
-    activeQuestions = questionsResidentJobseeker;
-    activeKeys = ['A','B','C'];
-    scores = scoresFor(activeKeys);
-    rawAnswers = {};
-    current = 0;
-    selections = [];
-    renderQuestion();
-  }
-
-  function startEmployed(field){
-    resultMode = 'recommendation';
-    employedField = field;
-    activeQuestions = questionsResidentEmployed;
-    activeKeys = ['CERT','LATERAL','LANG','RAISE','SWITCH','PR','ABROAD','TRANSFER'];
-    scores = scoresFor(activeKeys);
-    rawAnswers = {};
-    current = 0;
-    selections = [];
-    renderQuestion();
+  const goingHomeLink = document.getElementById('fork-going-home');
+  if (goingHomeLink){
+    goingHomeLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      quizSection.hidden = false;
+      launchBtn.hidden = true;
+      showHomeResult();
+      quizSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 
   function renderProgress(){
     progressEl.innerHTML = '';
-    for (let i = 0; i < activeQuestions.length; i++){
+    for (let i = 0; i < questions.length; i++){
       const d = document.createElement('div');
       d.className = 'dot' + (i < current ? ' done' : '');
       progressEl.appendChild(d);
@@ -1617,8 +1398,10 @@
 
   function renderQuestion(){
     renderProgress();
-    const q = activeQuestions[current];
-    countEl.textContent = `Question ${current+1} / ${activeQuestions.length}`;
+    const q = questions[current];
+    countEl.textContent = `Question ${current+1} / ${questions.length}`;
+    const contextEl = document.getElementById('pq-context');
+    contextEl.textContent = current === 0 ? '' : "Assuming you're currently outside Japan, trying to get in.";
     qEl.textContent = q.q;
     optsEl.innerHTML = '';
     q.opts.forEach(opt => {
@@ -1631,35 +1414,576 @@
   }
 
   function select(opt){
-    Object.entries(opt.pts).forEach(([k,v]) => { scores[k] += v; });
-    const q = activeQuestions[current];
-    selections.push({ topic: q.topic, pts: opt.pts });
-    if (q.rawKey && opt.raw !== undefined){
-      rawAnswers[q.rawKey] = opt.raw;
+    if (opt.branch === 'home'){
+      showHomeResult();
+      return;
     }
+    if (opt.branch === 'pivot'){
+      showPivotResult();
+      return;
+    }
+    if (opt.branch === 'it-outcome'){
+      showItOutcomeResult();
+      return;
+    }
+    if (opt.branch === 'settling'){
+      showSettlingResult();
+      return;
+    }
+    Object.entries(opt.pts || {}).forEach(([k,v]) => { scores[k] += v; });
+    if (opt.dnv) dnvEligible = true;
+    selections.push({ topic: questions[current].topic, pts: opt.pts || {} });
     current++;
-    if (current < activeQuestions.length){
+    if (current < questions.length){
       renderQuestion();
     } else {
       showResult();
     }
   }
 
-  function showResult(){
-    liveEl.classList.add('hidden');
-    resultEl.classList.add('active');
+  const homeReasons = [
+    { t: "Homesick — I miss my people, not just the idea of home", followup: true },
+    { t: "Someone back home is sick, injured, or aging and needs me there", reaction: "That one isn't really a Japan question — it's a family one, and it comes first. Happy to talk through how to step away cleanly, and what, if anything, coming back later could look like." },
+    { t: "I'm just tired of Japan, but not sure if that's permanent", followup: true },
+    { t: "Something else — I just want to think out loud", reaction: "That's what the call is for. No pitch, just a sounding board." }
+  ];
 
-    if (resultMode === 'recommendation'){
-      showRecommendationResult();
-    } else {
-      showPathResult();
-    }
+  const homeDrivers = [
+    { t: "Just missing my people, family, or culture back home", reaction: "That's the most common one, and it's not all-or-nothing — sometimes it's an actual trip home to recharge, sometimes it's a longer stretch away to properly reset, without deciding anything's over. Worth figuring out which one actually fits before doing anything drastic." },
+    { t: "I haven't really built friends or community here", reaction: "That's usually the most fixable piece, and it's active rather than something to just wait out — a hobby group, a language exchange, or trying something new tends to move this faster than time alone does. You have more control over this one than it feels like right now." },
+    { t: "My job isn't fulfilling, and it's coloring everything", reaction: "That might be a job problem, not a Japan problem. Worth figuring out on the call whether changing what you do here solves it, before deciding the country's the issue." },
+    { t: "Honestly, a bit of all of it", reaction: "That's common too, and exactly why this is worth an actual conversation instead of guessing at which piece to fix first." }
+  ];
+
+  function renderHomeReasons(){
+    const optsEl = document.getElementById('pq-home-opts');
+    const reactionEl = document.getElementById('pq-home-reaction');
+    const introEl = document.getElementById('pq-home-intro');
+    const followupEl = document.getElementById('pq-home-followup-prompt');
+    introEl.hidden = false;
+    followupEl.hidden = true;
+    optsEl.hidden = false;
+    optsEl.innerHTML = '';
+    reactionEl.hidden = true;
+    homeReasons.forEach(r => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = r.t;
+      btn.addEventListener('click', () => {
+        if (r.followup){
+          renderHomeDrivers();
+        } else {
+          optsEl.hidden = true;
+          reactionEl.textContent = r.reaction;
+          reactionEl.hidden = false;
+        }
+      });
+      optsEl.appendChild(btn);
+    });
   }
 
-  function showPathResult(){
+  function renderHomeDrivers(){
+    const optsEl = document.getElementById('pq-home-opts');
+    const reactionEl = document.getElementById('pq-home-reaction');
+    const introEl = document.getElementById('pq-home-intro');
+    const followupEl = document.getElementById('pq-home-followup-prompt');
+    introEl.hidden = true;
+    followupEl.hidden = false;
+    optsEl.hidden = false;
+    optsEl.innerHTML = '';
+    reactionEl.hidden = true;
+    homeDrivers.forEach(d => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = d.t;
+      btn.addEventListener('click', () => {
+        optsEl.hidden = true;
+        reactionEl.textContent = d.reaction;
+        reactionEl.hidden = false;
+      });
+      optsEl.appendChild(btn);
+    });
+  }
+
+  function showHomeResult(){
+    liveEl.classList.add('hidden');
+    resultEl.classList.remove('active');
+    settlingResultEl.classList.remove('active');
+    pivotResultEl.classList.remove('active');
+    itOutcomeResultEl.classList.remove('active');
+    homeResultEl.classList.add('active');
+    renderHomeReasons();
+  }
+
+  const pivotOptions = [
+    { key: 'B', t: "IT — tech, systems, troubleshooting, building things", why: "You're already in Japan, so the visa and relocation questions don't apply here — this is just about the roadmap into IT from where you're standing." },
+    { key: 'A', t: "Teaching — education, mentoring, working with students", why: "You're already in Japan, so this isn't about visas or relocation either — it's about how teaching actually works here and whether it's the right lane for you long-term." },
+    { key: 'C', t: "Not sure yet, or something else entirely", why: "You're already in Japan, so this isn't about visas or relocation — it's an honest read on what's actually realistic from where you're standing, tech or not." }
+  ];
+
+  const pivotFollowupSteps = [
+    {
+      key: 'tenure', q: "Roughly how long have you already been in Japan?",
+      opts: [
+        { t: "Under a year", v: 'new' },
+        { t: "1–3 years", v: 'established' },
+        { t: "3+ years", v: 'veteran' }
+      ]
+    },
+    {
+      key: 'background', q: "What's your current job or background, roughly?",
+      opts: [
+        { t: "Teaching (ALT, eikaiwa, etc.)", v: 'teaching' },
+        { t: "Already somewhat in tech/IT", v: 'tech' },
+        { t: "Some other non-tech job", v: 'other' },
+        { t: "Student, or between jobs right now", v: 'between' }
+      ]
+    }
+  ];
+
+  function composePivotWhy(key, baseWhy, state){
+    let mod = '';
+    if (state.tenure === 'new'){
+      mod += " Being under a year in, there's still real room to pick a lane before habits set in either way.";
+    } else if (state.tenure === 'veteran'){
+      mod += " With a few years already in, this is less about whether you can do it and more about the fastest real path from here.";
+    } else {
+      mod += " A couple years in is a solid base to build from.";
+    }
+    if (key === 'B' && state.background === 'tech'){
+      mod += " Since you're already somewhat in tech, this is more about leveling up or specializing than starting from zero.";
+    } else if (key === 'A' && state.background === 'teaching'){
+      mod += " Coming from teaching already, a lot of what you've built carries straight over.";
+    } else if (state.background === 'teaching'){
+      mod += " Coming from teaching, the people and communication skills carry over more than you'd expect.";
+    }
+    return baseWhy + mod;
+  }
+
+  function composePivotSecondary(key, state){
+    if (key === 'B' && state.background === 'teaching'){
+      return `<strong>${paths.A.name}</strong> is worth keeping in mind too — you already have real experience there, and it's a fair backup if the IT roadmap feels slower than you'd like.`;
+    }
+    if (key === 'A' && state.background === 'tech'){
+      return `<strong>${paths.B.name}</strong> is worth keeping in mind too — with a tech background already, that door may open faster than teaching would.`;
+    }
+    if (key === 'C'){
+      if (state.background === 'teaching'){
+        return `<strong>${paths.A.name}</strong> is a reasonable starting point given your background, if you want a concrete lane to test before exploring further.`;
+      }
+      if (state.background === 'tech'){
+        return `<strong>${paths.B.name}</strong> is a reasonable starting point given your background, if you want a concrete lane to test before exploring further.`;
+      }
+    }
+    return '';
+  }
+
+  function renderPivotFollowups(key, baseWhy, bodyEl){
+    const state = {};
+    let step = 0;
+    function renderStep(){
+      bodyEl.innerHTML = '';
+      const s = pivotFollowupSteps[step];
+      const q = document.createElement('p');
+      q.className = 'quiz-q';
+      q.style.fontSize = '1rem';
+      q.style.marginBottom = '14px';
+      q.textContent = s.q;
+      bodyEl.appendChild(q);
+      const optsWrap = document.createElement('div');
+      optsWrap.className = 'quiz-opts';
+      bodyEl.appendChild(optsWrap);
+      s.opts.forEach(o => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt';
+        btn.textContent = o.t;
+        btn.addEventListener('click', () => {
+          state[s.key] = o.v;
+          step++;
+          if (step < pivotFollowupSteps.length){
+            renderStep();
+          } else {
+            showDirectResult(key, composePivotWhy(key, baseWhy, state), composePivotSecondary(key, state));
+          }
+        });
+        optsWrap.appendChild(btn);
+      });
+    }
+    renderStep();
+  }
+
+  function renderPivotChoice(){
+    const introEl = document.getElementById('pq-pivot-intro');
+    const pivotOptsEl = document.getElementById('pq-pivot-opts');
+    const pivotBodyEl = document.getElementById('pq-pivot-body');
+    introEl.hidden = false;
+    pivotOptsEl.hidden = false;
+    pivotOptsEl.innerHTML = '';
+    pivotBodyEl.hidden = true;
+    pivotBodyEl.innerHTML = '';
+    pivotOptions.forEach(o => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = o.t;
+      btn.addEventListener('click', () => {
+        introEl.hidden = true;
+        pivotOptsEl.hidden = true;
+        pivotBodyEl.hidden = false;
+        renderPivotFollowups(o.key, o.why, pivotBodyEl);
+      });
+      pivotOptsEl.appendChild(btn);
+    });
+  }
+
+  function showPivotResult(){
+    liveEl.classList.add('hidden');
+    resultEl.classList.remove('active');
+    homeResultEl.classList.remove('active');
+    settlingResultEl.classList.remove('active');
+    itOutcomeResultEl.classList.remove('active');
+    pivotResultEl.classList.add('active');
+    renderPivotChoice();
+  }
+
+  function showDirectResult(key, whyText, secondaryHtml){
+    liveEl.classList.add('hidden');
+    homeResultEl.classList.remove('active');
+    settlingResultEl.classList.remove('active');
+    pivotResultEl.classList.remove('active');
+    itOutcomeResultEl.classList.remove('active');
+    resultEl.classList.add('active');
+    const top = paths[key];
+    document.getElementById('pq-result-tag').textContent = top.tag;
+    document.getElementById('pq-result-title').textContent = top.name;
+    document.getElementById('pq-result-desc').textContent = top.desc;
+    document.getElementById('pq-result-why').innerHTML = whyText ? `<strong>${top.name}</strong> — ${whyText}` : `<strong>${top.name}</strong>`;
+    document.getElementById('pq-result-forward').textContent = forwardLooks[key] || '';
+    document.getElementById('pq-result-secondary').innerHTML = secondaryHtml || '';
+    document.getElementById('pq-bars').innerHTML = '';
+    renderBonus();
+  }
+
+  const itOutcomeReasons = [
+    { key: 'raise', t: "More money — a raise or better comp" },
+    { key: 'promotion', t: "A promotion, or a move into a lead/management role", reaction: "That's usually an internal conversation before it's an external one — worth checking whether your current company even has a path to lead or management before assuming you have to leave to get it. Where your Japanese and certifications actually stand also factors into whether you're seen as ready, which is worth an honest read before you ask. Asking internally first is lower-risk, and if the answer's no, that's useful information too." },
+    { key: 'specialization', t: "Leveling up my specialization or industry expertise (going deeper, or switching lanes — helpdesk → networking, cloud, security)", reaction: "Worth mapping out first whether you're going deeper in what you already do or switching lanes entirely — those take different roadmaps. Picking the right certifications and knowing what that specialization actually pays in Japan both feed into which one makes sense, and it's worth asking internally whether a lateral move exists before job-hunting for it elsewhere." },
+    { key: 'certs', t: "Picking the right certifications — not sure which ones actually matter", reaction: "This is exactly the kind of thing that's easy to get wrong solo — which certs actually matter depends on your current lane, your experience, and what's actually hiring in Japan right now, not just what's popular globally or on résumé-advice forums. Worth pairing that research with knowing what the resulting role actually pays here, so the certs you chase actually move your number." },
+    { key: 'mentor', t: "A mentor, or someone to actually bounce career decisions off", reaction: "Fair — a lot of people get this far on their own and then stall without someone to sanity-check the next move. That's most of what the call actually is: working through raise timing, specialization, certifications, and Japanese all in one conversation instead of guessing at each separately." },
+    { key: 'japanese', t: "Better Japanese — feels like it's capping how far I can go", reaction: "Common one, and usually true — a lot of the better roles, the promotion conversations, and the raise conversations open up once your Japanese clears a certain bar. Worth figuring out honestly where you're actually at and what's specifically blocking you, JLPT N2 territory or otherwise." },
+    { key: 'fit', t: "A better fit, or more balance — different company, culture, work style, or just less burnout", reaction: "Sometimes that's a role problem, sometimes it's a company problem, sometimes it's IT in general wearing on you — worth telling those apart before deciding to switch jobs, switch specializations, or just take an actual break. It's rarely actually a certifications or Japanese-level problem, so there's no point fixing those first if the real issue is somewhere else." }
+  ];
+
+  function renderItOutcomeReasons(){
+    const optsEl3 = document.getElementById('pq-itoutcome-opts');
+    const bodyEl = document.getElementById('pq-itoutcome-body');
+    optsEl3.hidden = false;
+    optsEl3.innerHTML = '';
+    bodyEl.hidden = true;
+    bodyEl.innerHTML = '';
+    itOutcomeReasons.forEach(r => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = r.t;
+      btn.addEventListener('click', () => {
+        optsEl3.hidden = true;
+        bodyEl.hidden = false;
+        if (r.key === 'raise'){
+          renderRaiseFlow(bodyEl);
+        } else {
+          const reaction = document.createElement('p');
+          reaction.className = 'result-desc';
+          reaction.textContent = r.reaction;
+          bodyEl.appendChild(reaction);
+          appendSettlingCta(bodyEl);
+        }
+      });
+      optsEl3.appendChild(btn);
+    });
+  }
+
+  function showItOutcomeResult(){
+    liveEl.classList.add('hidden');
+    resultEl.classList.remove('active');
+    homeResultEl.classList.remove('active');
+    pivotResultEl.classList.remove('active');
+    settlingResultEl.classList.remove('active');
+    itOutcomeResultEl.classList.add('active');
+    renderItOutcomeReasons();
+  }
+
+  const settlingReasons = [
+    { key: 'raise', t: "New-ish at my job and wondering if I should push for a raise already" },
+    { key: 'notsure', t: "Not sure if I actually like it here yet" },
+    { key: 'footing', t: "Just haven't found my footing — no real complaint, just unsettled" }
+  ];
+
+  function showSettlingResult(){
+    liveEl.classList.add('hidden');
+    resultEl.classList.remove('active');
+    homeResultEl.classList.remove('active');
+    pivotResultEl.classList.remove('active');
+    itOutcomeResultEl.classList.remove('active');
+    settlingResultEl.classList.add('active');
+    renderSettlingReasons();
+  }
+
+  function renderSettlingReasons(){
+    const optsEl2 = document.getElementById('pq-settling-opts');
+    const bodyEl = document.getElementById('pq-settling-body');
+    optsEl2.hidden = false;
+    optsEl2.innerHTML = '';
+    bodyEl.hidden = true;
+    bodyEl.innerHTML = '';
+    settlingReasons.forEach(r => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = r.t;
+      btn.addEventListener('click', () => {
+        optsEl2.hidden = true;
+        bodyEl.hidden = false;
+        if (r.key === 'raise'){
+          renderRaiseFlow(bodyEl);
+        } else {
+          renderCommunityFlow(bodyEl);
+        }
+      });
+      optsEl2.appendChild(btn);
+    });
+  }
+
+  function appendSettlingCta(bodyEl){
+    const ctaWrap = document.createElement('div');
+    ctaWrap.className = 'result-ctas';
+    ctaWrap.style.marginTop = '20px';
+    const a = document.createElement('a');
+    a.className = 'btn btn-primary';
+    a.href = 'https://cal.com/notyoursensei';
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.textContent = 'Talk it through →';
+    const retry = document.createElement('button');
+    retry.className = 'retry-link';
+    retry.textContent = 'Retake the quiz';
+    retry.addEventListener('click', reset);
+    ctaWrap.appendChild(a);
+    ctaWrap.appendChild(retry);
+    bodyEl.appendChild(ctaWrap);
+  }
+
+  function composeCommunityReaction(state){
+    let base;
+    if (state.community === 'yes'){
+      base = "You've already got people, so this probably isn't just a settling-in thing — worth an actual conversation rather than a \"give it time\" answer.";
+    } else if (state.tenure === 'new'){
+      base = "Said lightly: you're still early. Community here usually takes 6–12 months to actually form, longer than most people expect, so this is more likely timing than a verdict on Japan.";
+    } else {
+      base = "Said lightly: that's usually the missing piece more than a verdict on Japan itself — but at this point it's worth actively building rather than just waiting it out.";
+    }
+    let mod = '';
+    if (state.source === 'language'){
+      mod = " If the language barrier is the main friction, that's also the most directly fixable piece — daily life gets noticeably easier once that moves.";
+    } else if (state.source === 'work'){
+      mod = " If it's really work that's souring things, that might be a job problem more than a Japan problem — worth separating the two before deciding anything bigger.";
+    } else if (state.source === 'isolation'){
+      mod = " A hobby group, a language exchange, or just trying something new tends to move this faster than time alone does — you likely have more control over this than it feels like right now.";
+    }
+    return base + mod + " Worth talking through on the call which piece to actually work on first.";
+  }
+
+  function renderCommunityFlow(bodyEl){
+    bodyEl.innerHTML = '';
+    const state = {};
+    const steps = [
+      {
+        key: 'tenure', q: "Roughly how long have you been in Japan?",
+        opts: [
+          { t: "Under 6 months", v: 'new' },
+          { t: "6 months – 2 years", v: 'settling' },
+          { t: "2+ years", v: 'established' }
+        ]
+      },
+      {
+        key: 'community', q: "Have you built any kind of community here yet — friends, a hobby group, regulars somewhere, anything?",
+        opts: [
+          { t: "Not really — it's mostly work and home", v: 'none' },
+          { t: "A little, but nothing solid yet", v: 'some' },
+          { t: "Yeah, I've got people", v: 'yes' }
+        ]
+      },
+      {
+        key: 'source', q: "If you had to pin it down, what's actually bothering you most?",
+        opts: [
+          { t: "The language barrier, day to day", v: 'language' },
+          { t: "Work — it's not what I hoped", v: 'work' },
+          { t: "Isolation, not having people around", v: 'isolation' },
+          { t: "Nothing specific, just a general feeling", v: 'vague' }
+        ]
+      }
+    ];
+    let step = 0;
+    function renderStep(){
+      bodyEl.innerHTML = '';
+      const s = steps[step];
+      const q = document.createElement('p');
+      q.className = 'quiz-q';
+      q.style.fontSize = '1rem';
+      q.style.marginBottom = '14px';
+      q.textContent = s.q;
+      bodyEl.appendChild(q);
+      const optsWrap = document.createElement('div');
+      optsWrap.className = 'quiz-opts';
+      bodyEl.appendChild(optsWrap);
+      s.opts.forEach(o => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt';
+        btn.textContent = o.t;
+        btn.addEventListener('click', () => {
+          state[s.key] = o.v;
+          step++;
+          if (step < steps.length){ renderStep(); } else { renderCommunityReaction(); }
+        });
+        optsWrap.appendChild(btn);
+      });
+    }
+    function renderCommunityReaction(){
+      bodyEl.innerHTML = '';
+      const reaction = document.createElement('p');
+      reaction.className = 'result-desc';
+      reaction.textContent = composeCommunityReaction(state);
+      bodyEl.appendChild(reaction);
+      appendSettlingCta(bodyEl);
+    }
+    renderStep();
+  }
+
+  function renderRaiseFlow(bodyEl){
+    bodyEl.innerHTML = '';
+    const state = {};
+    const steps = [
+      {
+        key: 'tenure', q: "How long have you been at this company?",
+        opts: [
+          { t: "Under 6 months", v: 'new' },
+          { t: "6–18 months", v: 'early' },
+          { t: "1–3 years", v: 'established' },
+          { t: "3+ years", v: 'veteran' }
+        ]
+      },
+      {
+        key: 'language', q: "Where's your Japanese at, roughly?",
+        opts: [
+          { t: "Beginner", v: 'beginner' },
+          { t: "Conversational", v: 'conversational' },
+          { t: "Business-level or fluent", v: 'business' }
+        ]
+      },
+      {
+        key: 'company', q: "Foreign company, or Japanese?",
+        opts: [
+          { t: "Foreign company", v: 'foreign' },
+          { t: "Japanese company", v: 'japanese' },
+          { t: "Not sure how to categorize it", v: 'unsure' }
+        ]
+      },
+      {
+        key: 'salaryCompare', q: "Where do you think your current pay lines up against the average for your role in Japan?",
+        opts: [
+          { t: "Below average, I think", v: 'below' },
+          { t: "About average", v: 'average' },
+          { t: "Above average", v: 'above' },
+          { t: "Honestly not sure — never checked", v: 'unsure' }
+        ]
+      }
+    ];
+    let step = 0;
+    function renderStep(){
+      bodyEl.innerHTML = '';
+      const s = steps[step];
+      const q = document.createElement('p');
+      q.className = 'quiz-q';
+      q.style.fontSize = '1rem';
+      q.style.marginBottom = '14px';
+      q.textContent = s.q;
+      bodyEl.appendChild(q);
+      const optsWrap = document.createElement('div');
+      optsWrap.className = 'quiz-opts';
+      bodyEl.appendChild(optsWrap);
+      s.opts.forEach(o => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt';
+        btn.textContent = o.t;
+        btn.addEventListener('click', () => {
+          state[s.key] = o.v;
+          step++;
+          if (step < steps.length){ renderStep(); } else { renderRaiseReaction(); }
+        });
+        optsWrap.appendChild(btn);
+      });
+    }
+    function renderRaiseReaction(){
+      bodyEl.innerHTML = '';
+      const reaction = document.createElement('p');
+      reaction.className = 'result-desc';
+      reaction.textContent = composeRaiseReaction(state);
+      bodyEl.appendChild(reaction);
+      appendSettlingCta(bodyEl);
+    }
+    renderStep();
+  }
+
+  function composeRaiseReaction(state){
+    let base;
+    if (state.tenure === 'new'){
+      base = "Under six months in, said lightly: it's early. Raises here mostly run on annual review cycles rather than renegotiation-on-demand, so pushing now usually reads as impatience rather than leverage.";
+    } else if (state.tenure === 'early'){
+      base = "6–18 months is borderline — not unreasonable to raise it, but you'd want a concrete case (a specific win, a role change) rather than just time served.";
+    } else if (state.tenure === 'established'){
+      base = "1–3 years in is a completely fair point to ask, especially if your role or output has grown since you started.";
+    } else {
+      base = "3+ years in with no adjustment is genuinely overdue territory — that conversation is well past due.";
+    }
+    let mod = '';
+    if (state.company === 'foreign'){
+      mod += " Foreign companies here tend to be more open to a direct ask than the wait-your-turn norm at Japanese firms.";
+    } else if (state.company === 'japanese'){
+      mod += " Japanese companies tend to move slower on this and weigh tenure and internal politics as much as performance — the ask still works, just frame it around the annual review rather than a surprise conversation.";
+    }
+    if (state.language === 'business'){
+      mod += " Business-level Japanese is genuine leverage a lot of people in your position don't have — worth naming directly.";
+    } else if (state.language === 'beginner'){
+      mod += " Language isn't your strongest card yet, so lean on the work itself rather than language when you make the case.";
+    }
+    let salaryMod = '';
+    if (state.salaryCompare === 'below'){
+      salaryMod = " If your gut says you're already below average, that's real leverage — just be careful what average means here: foreign-company and Japanese-company pay for the same title can be worlds apart, and plenty of quoted Japanese salary figures already have overtime baked into the number rather than sitting on top of it.";
+    } else if (state.salaryCompare === 'average'){
+      salaryMod = " Landing around average isn't a strong case on its own, but it's worth double-checking that the average you're comparing against isn't already assuming unpaid or fixed overtime — a lot of Japanese comp figures quietly do, which makes your real hourly rate lower than it looks.";
+    } else if (state.salaryCompare === 'above'){
+      salaryMod = " Above average shifts the pitch — less about being underpaid, more about what you've earned since you started, which is a different conversation but still a real one.";
+    } else {
+      salaryMod = " Not knowing where you land is normal — most people haven't actually checked, and the numbers floating around rarely separate foreign-company pay from Japanese-company pay, or say whether overtime's included. Worth nailing that down before you walk into the conversation.";
+    }
+    return base + mod + salaryMod + " Leveling up a certification and checking whether a lateral move inside the company gets you there faster are both worth weighing alongside a straight ask — exactly the kind of thing worth mapping out together on the call.";
+  }
+
+  function showResult(){
+    liveEl.classList.add('hidden');
+    homeResultEl.classList.remove('active');
+    settlingResultEl.classList.remove('active');
+    pivotResultEl.classList.remove('active');
+    itOutcomeResultEl.classList.remove('active');
+    resultEl.classList.add('active');
+
     const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
-    const topKey = sorted[0][0];
+    let topKey = sorted[0][0];
+    const isFallback = (topKey === 'C' && dnvEligible);
+    if (isFallback){
+      topKey = 'H';
+      scores.H = sorted[0][1] + 1;
+    }
     const top = paths[topKey];
+    const rescored = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+    const max = rescored[0][1] || 1;
 
     document.getElementById('pq-result-tag').textContent = top.tag;
     document.getElementById('pq-result-title').textContent = top.name;
@@ -1669,159 +1993,59 @@
       .filter(s => s.pts[topKey])
       .sort((a, b) => b.pts[topKey] - a.pts[topKey]);
     const whyEl = document.getElementById('pq-result-why');
-    if (contributing.length === 1){
-      whyEl.textContent = `That call mainly came down to your answer on ${contributing[0].topic}.`;
-    } else if (contributing.length > 1){
-      whyEl.textContent = `That call mainly came down to two things: your answer on ${contributing[0].topic}, and on ${contributing[1].topic}.`;
+    const recommended = `<strong>${top.name}</strong>`;
+    if (isFallback){
+      whyEl.innerHTML = `${recommended} — nothing else pulled ahead clearly, but you already clear the income bar for a digital nomad visa, so that's usually the faster way to get here and sort out the rest on the ground.`;
+    } else if (contributing.length === 1){
+      whyEl.innerHTML = `${recommended} — that call mainly came down to your answer on ${contributing[0].topic}.`;
+    } else if (contributing.length >= 2){
+      const topics = contributing.slice(0, 3).map(c => c.topic);
+      const list = topics.length === 2
+        ? `${topics[0]} and ${topics[1]}`
+        : `${topics.slice(0, -1).join(', ')}, and ${topics[topics.length - 1]}`;
+      whyEl.innerHTML = `${recommended} — that call mainly came down to ${topics.length === 2 ? 'two things' : 'a few things'}: your answers on ${list}.`;
     } else {
-      whyEl.textContent = '';
+      whyEl.innerHTML = recommended;
+    }
+    document.getElementById('pq-result-forward').textContent = isFallback ? forwardLooks.H : (forwardLooks[topKey] || '');
+
+    const secondaryEl = document.getElementById('pq-result-secondary');
+    const runnerUp = rescored.find(([key]) => key !== topKey);
+    if (!isFallback && runnerUp && runnerUp[1] > 0 && runnerUp[1] >= sorted[0][1] * 0.7){
+      const second = paths[runnerUp[0]];
+      secondaryEl.innerHTML = `Worth also asking about on the call: <strong>${second.name}</strong> scored close behind — if anything about ${top.name} doesn't feel like a perfect fit, that's the other real option here.`;
+    } else {
+      secondaryEl.innerHTML = '';
     }
 
-    renderAlsoConsidered(sorted, paths, top.name);
-
-    renderBonus();
-  }
-
-  function showRecommendationResult(){
-    // Fold in the two answers that aren't scored per-option: pay-vs-benchmark, and
-    // the "too much overtime + not paid for it" overperforming signal.
-    const signal = computePaySignal(employedField, rawAnswers.salary);
-    Object.entries(paySignalPts[signal] || {}).forEach(([k,v]) => { scores[k] += v; });
-    let raiseIsUrgent = false;
-    if (rawAnswers.overtime === 'toomuch'){
-      if (signal === 'above' || signal === 'wayAbove'){
-        scores.LATERAL += 2;
-      } else {
-        scores.RAISE += 3;
-        raiseIsUrgent = true; // genuinely overworked + not already well-paid — ask now, don't wait on a cert
-      }
-    }
-
-    // Wants to stay long-term but doesn't have PR/citizenship yet — a strong, deliberate
-    // nudge, not a tiebreaker, since it's a status gap they can act on regardless of
-    // whatever else this quiz says.
-    if (rawAnswers.longterm === 'stay' && rawAnswers.visa && rawAnswers.visa !== 'pr'){
-      scores.PR += 6;
-    }
-
-    // Wants out of Japan (explicitly, or "open to it eventually") — which of the two
-    // exit outcomes applies depends on whether their company can actually move them.
-    // Same weighting as before: an explicit "ready to look abroad" should reliably win,
-    // "open to it eventually" should only ever be a minor mention.
-    if (rawAnswers.longterm === 'transfer' || rawAnswers.longterm === 'abroad'){
-      const strength = rawAnswers.longterm === 'abroad' ? 6 : 2;
-      if (rawAnswers.globalCompany === 'yes'){
-        scores.TRANSFER += strength;
-      } else {
-        // No global presence, or not sure it exists — don't recommend asking for
-        // something that might not be on the table. Default to the external search.
-        scores.ABROAD += strength;
-      }
-    }
-
-    // Japanese-style employer (Japanese company, or foreign-owned but run the same way):
-    // both the pay gap and the overtime culture point harder at "change companies."
-    // Already at a genuine foreign company — that lever's already been pulled, so it
-    // doesn't get an extra boost either way.
-    const atJPStyleCompany = rawAnswers.companyType === 'jp' || rawAnswers.companyType === 'mixed';
-    if (atJPStyleCompany){
-      if (rawAnswers.overtime === 'toomuch') scores.SWITCH += 2;
-      if (signal === 'below' || signal === 'about') scores.SWITCH += 1;
-    }
-
-    // CERT vs RAISE tie-break: when someone's genuinely overworked and underpaid
-    // (raiseIsUrgent), RAISE stays untouched — asking now is the right call. But if
-    // RAISE is only contending on ordinary pay-signal points, and CERT is a real
-    // contender too (not just scoring from nowhere), lining up field expertise or a
-    // cert first makes the eventual ask easier — so nudge CERT just ahead of RAISE.
-    if (!raiseIsUrgent && scores.CERT > 0 && scores.RAISE >= scores.CERT){
-      scores.CERT = scores.RAISE + 1;
-    }
-
-    const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
-    const topKey = sorted[0][0];
-    const top = recPaths[topKey];
-
-    document.getElementById('pq-result-tag').textContent = top.tag;
-    document.getElementById('pq-result-title').textContent = top.name;
-    document.getElementById('pq-result-desc').textContent = top.desc;
-
-    const whyEl = document.getElementById('pq-result-why');
-    whyEl.textContent = [visaCaveats[rawAnswers.visa], companyNotes[rawAnswers.companyType]]
-      .filter(Boolean).join(' ');
-
-    renderAlsoConsidered(sorted, recPaths, top.name);
-
-    renderBonus();
-  }
-
-  // Ranked, plain-language list instead of a percentage bar chart: the top result
-  // is already the headline above, so this only ever lists runners-up that were a
-  // real part of the picture (at least 30% of the leader's score, max 3 of them),
-  // ranked in order — each one explained by what it would actually help with, not
-  // dismissed as "not a real contender."
-  const RUNNER_UP_LEAD_INS = ["Right behind that", "Next in line", "Rounding it out"];
-
-  function renderAlsoConsidered(sorted, lookup, topName){
-    const alsoEl = document.getElementById('pq-also');
-    const labelEl = document.getElementById('pq-also-label');
-    const listEl = document.getElementById('pq-also-list');
-    listEl.innerHTML = '';
-    const topScore = sorted[0][1] || 1;
-    const runnersUp = sorted.slice(1)
-      .filter(([, score]) => score > 0 && (score / topScore) >= 0.3)
-      .slice(0, 3);
-    if (runnersUp.length === 0){
-      alsoEl.hidden = true;
-      return;
-    }
-    alsoEl.hidden = false;
-    labelEl.textContent = `Behind "${topName}"`;
-    runnersUp.forEach(([key, score], i) => {
-      const strong = (score / topScore) >= 0.6;
-      const li = document.createElement('li');
-      li.className = 'also-item';
-      const rank = document.createElement('span');
-      rank.className = 'also-rank';
-      rank.textContent = `#${i + 2}`;
-      const body = document.createElement('span');
-      const nameEl = document.createElement('span');
-      nameEl.className = 'also-name' + (strong ? ' strong' : '');
-      nameEl.textContent = lookup[key].name;
-      body.appendChild(nameEl);
-      body.appendChild(document.createTextNode(
-        ` — ${RUNNER_UP_LEAD_INS[i]}: ${lookup[key].note}.`
-      ));
-      li.appendChild(rank);
-      li.appendChild(body);
-      listEl.appendChild(li);
+    const barsEl = document.getElementById('pq-bars');
+    barsEl.innerHTML = '';
+    rescored.forEach(([key, score]) => {
+      const pct = Math.round((score / max) * 100);
+      const row = document.createElement('div');
+      row.className = 'bar-row';
+      row.innerHTML = `
+        <div class="bar-label">${paths[key].name}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+        <div class="bar-pct">${pct}%</div>
+      `;
+      barsEl.appendChild(row);
     });
+
+    renderBonus();
   }
 
-  const bonusQuestionMoving = "What's actually pulling you to Japan?";
-  const bonusOptionsMoving = [
+  const bonusOptions = [
     { t: "The food, obviously", reaction: "Correct answer. Book the call, we'll workshop the visa around your ramen budget." },
     { t: "I've watched too much anime and won't pretend otherwise", reaction: "Respect the honesty. Still a valid entry vector — just not one we script on the call." },
     { t: "The trains genuinely run on time and it broke something in my brain", reaction: "Same. It's a slow-motion personality change and there's no support group for it yet." },
     { t: "Honestly? A cooler life than the one I've got", reaction: "Fair — that's most people who book. This call is step one of that, not the fantasy version." }
   ];
 
-  // Track-appropriate version for the "already in Japan" quiz — "pulling you to Japan"
-  // doesn't make sense in the past tense, so residents get their own set, same tone.
-  const bonusQuestionResident = "What's actually keeping you in Japan?";
-  const bonusOptionsResident = [
-    { t: "The food — still not over it, still never will be", reaction: "Correct answer. Some things don't get old just because you live here now." },
-    { t: "I've been here long enough that 'moving back' doesn't really make sense anymore", reaction: "That's the real answer for a lot of long-timers — worth building a plan around instead of just drifting on it." },
-    { t: "The trains still run on time and it's still doing something to my brain", reaction: "Same. Still no support group. Still not mad about it." },
-    { t: "Honestly? I built something here I'm not ready to walk away from", reaction: "That's the actual goal for most people who book — let's make what you built more solid, not just something you're holding onto." }
-  ];
-
   function renderBonus(){
     const bonusOptsEl = document.getElementById('pq-bonus-opts');
     const bonusReactionEl = document.getElementById('pq-bonus-reaction');
     const bonusQEl = document.getElementById('pq-bonus-q');
-    const bonusOptions = track === 'resident' ? bonusOptionsResident : bonusOptionsMoving;
-    bonusQEl.textContent = track === 'resident' ? bonusQuestionResident : bonusQuestionMoving;
     bonusOptsEl.innerHTML = '';
     bonusReactionEl.hidden = true;
     bonusQEl.hidden = false;
@@ -1843,8 +2067,12 @@
     current = 0;
     Object.keys(scores).forEach(k => scores[k] = 0);
     selections = [];
-    rawAnswers = {};
+    dnvEligible = false;
     resultEl.classList.remove('active');
+    homeResultEl.classList.remove('active');
+    settlingResultEl.classList.remove('active');
+    pivotResultEl.classList.remove('active');
+    itOutcomeResultEl.classList.remove('active');
     liveEl.classList.remove('hidden');
     document.getElementById('pq-bonus-opts').hidden = false;
     document.getElementById('pq-bonus-reaction').hidden = true;
@@ -1852,6 +2080,9 @@
   }
 
   document.getElementById('pq-retry').addEventListener('click', reset);
+  const homeRetryBtn = document.getElementById('pq-home-retry');
+  if (homeRetryBtn) homeRetryBtn.addEventListener('click', reset);
+  renderQuestion();
 })();
 </script>
 
