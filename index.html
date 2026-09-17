@@ -933,7 +933,7 @@
     <div class="quiz-result" id="pq-home-result">
       <div class="result-ptag">Already here</div>
       <h3 class="result-title">That's not failure. That's data.</h3>
-      <p class="result-desc" id="pq-home-intro">I went home for a stretch myself before any of this stuck, so this isn't a lecture. What's closest to what's actually going on?</p>
+      <p class="result-desc" id="pq-home-intro">Going home isn't failing. I did it twice myself before landing in a situation that's kept me in Japan over 10 years now, permanent residency included. This isn't a lecture. What's closest to what's actually going on?</p>
       <p class="result-desc" id="pq-home-followup-prompt" hidden style="margin-top:4px;">What's actually driving that, if you had to guess?</p>
       <div class="quiz-opts" id="pq-home-opts"></div>
       <p class="result-desc" id="pq-home-reaction" hidden style="margin-top:4px;"></p>
@@ -1426,13 +1426,14 @@
     },
     {
       topic: "your background",
+      key: "background",
       q: "From here on, this is about moving to Japan from abroad. What's your background right now?",
       opts: [
-        { t: "I already work for a company that might have a Japan presence or global ops", pts: {F:3} },
-        { t: "I have a teaching background or real interest in education", pts: {A:3} },
-        { t: "I'm early-career or between things, open to something new", pts: {B:1, D:1, G:1} },
-        { t: "None of these quite fit — I want to explore broadly", pts: {C:2} },
-        { t: "I'm in university, recently graduated, or looking at grad school or an internship", pts: {G:3} }
+        { t: "I already work for a company that might have a Japan presence or global ops", pts: {F:3}, v: 'has_job' },
+        { t: "I have a teaching background or real interest in education", pts: {A:3}, v: 'teaching' },
+        { t: "I'm early-career or between things, open to something new", pts: {B:1, D:1, G:1}, v: 'between' },
+        { t: "None of these quite fit — I want to explore broadly", pts: {C:2}, v: 'explore' },
+        { t: "I'm in university, recently graduated, or looking at grad school or an internship", pts: {G:3}, v: 'student' }
       ]
     },
     {
@@ -1560,6 +1561,7 @@
     },
     {
       topic: "whether your current employer could move you",
+      skipIf: (a) => a.background === 'between' || a.background === 'student',
       q: "Does your current employer operate outside your home country at all?",
       opts: [
         { t: "I'm not currently employed", pts: {} },
@@ -2169,6 +2171,9 @@
             reaction.className = 'result-desc';
             reaction.textContent = composeItOutcomeReaction(key, baseReaction, state);
             bodyEl.appendChild(reaction);
+            if (key === 'promotion'){
+              appendProductReco(bodyEl, productRecos.salaryReality);
+            }
             appendSettlingCta(bodyEl);
           }
         });
@@ -2240,6 +2245,12 @@
         { t: "Tech / IT background or interest", v: 'tech' },
         { t: "Early-career, a student, or open to anything", v: 'open' }
       ]
+    },
+    {
+      key: 'language', q: "Where's your Japanese level right now?",
+      opts: [
+        { t: "Beginner", v: 'beginner' }, { t: "Conversational", v: 'conversational' }, { t: "Business-level or fluent", v: 'business' }
+      ]
     }
   ];
 
@@ -2270,7 +2281,11 @@
     } else {
       bgMod = ` Given where you're at, <strong>${paths.C.name}</strong> is probably the right starting point — get an honest read on what's realistic before committing to one lane.`;
     }
-    return base + planMod + bgMod + " Either way, the partner solves where you can live — not what you'll be doing there. That part's still on you, and it's worth mapping out properly before you land rather than after.";
+    let langMod = '';
+    if (state.language === 'beginner' || state.language === 'conversational'){
+      langMod = " Congratulations on finding someone worth relocating for, by the way. One honest thing worth knowing going in: without the language, more of the daily weight tends to fall on your partner — paperwork, translating, being your main link to everything outside the house — and that kind of imbalance can wear on a relationship over time. Getting to where you can handle your own paperwork and bring in your own income isn't just practical. It protects the relationship you moved here for.";
+    }
+    return base + planMod + bgMod + langMod + " Either way, the partner solves where you can live — not what you'll be doing there. That part's still on you, and it's worth mapping out properly before you land rather than after.";
   }
 
   function renderPartnerFlow(bodyEl){
