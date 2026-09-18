@@ -37,7 +37,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "How much Japanese will I need to move to Japan?",
+      "name": "How much Japanese will I need?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "More than none — no sugar coating. Some people have the finances to move out and go straight into full-time language school. Most don't: they study alongside their current job and come out once they've hit a usable level, JLPT N3, then keep pushing for N2 once they're on the ground. Higher is always better. No real way around putting in the work long-term."
@@ -61,7 +61,7 @@
     },
     {
       "@type": "Question",
-      "name": "How long does it actually take to move to Japan?",
+      "name": "How long does this actually take to work?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Depends on the path and how much time you put in weekly — there's no overnight version of this. Some routes (like JET) run on fixed yearly cycles no amount of momentum can compress; others move faster. The Transition Sprint is built around getting real forward motion inside 90 days — a plan, applications out, momentum — not a guarantee you'll be relocated by then. The free chat will give you an honest read on your specific timeline."
@@ -609,8 +609,7 @@
       <!-- Placeholder handle — confirm @notyoursensei1 is actually registered on Instagram before publishing, swap the URL below if you end up with a different handle -->
       <a href="https://www.instagram.com/notyoursensei1/" target="_blank" rel="noopener noreferrer">instagram</a>
     </nav>
-    <a class="nav-cta" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">book a call</a>
-  </div>
+    <a data-track="nav_book_call" class="nav-cta" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">book a call</a>  </div>
 </header>
 
 <div class="brandhero">
@@ -725,13 +724,11 @@
       the right move for you, I'll tell you so, plainly.
     </p>
     <div class="hero-ctas">
-      <a class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Book a call →</a>
-      <a class="btn btn-ghost" href="#path-quiz" id="fork-take-quiz">Not sure which path? Take the quiz →</a>
-    </div>
+      <a data-track="hero_book_call" class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Book a call →</a>      <a data-track="hero_take_quiz" class="btn btn-ghost" href="#path-quiz" id="fork-take-quiz">Not sure which path? Take the quiz →</a>    </div>
     <p class="reassure">Pick a slot instantly — no payment, no catch. Prefer email instead? Write <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> <button type="button" class="copy-email-btn" onclick="copyEmail(this)" style="font-family:var(--mono);font-size:.78rem;color:var(--teal);background:none;border:1px solid rgba(111,173,163,0.35);border-radius:3px;padding:2px 8px;cursor:pointer;margin-left:4px;">copy</button></p>
   </section>
 
-  <div class="wrap" style="padding-top:18px;">
+  <div style="padding-top:18px;">
     <p class="fork" style="margin-top:0; padding-top:0; border-top:none;">
       <span><b>Hear the podcast first?</b> <a href="#podcast">Listen here →</a></span>
       <span><b>Just here for the stories?</b> <a href="#youtube">Not Your Sensei, by Night →</a></span>
@@ -775,8 +772,7 @@
     <h2>Eight ways in — pick the one that's actually yours</h2>
     <p class="dek">Most people land on "teach English" or "learn to code" because they're the two paths anyone's heard of. There's more room than that, and the right one depends on you.</p>
 
-    <button id="pq-launch" type="button">Not sure yet? Take the quiz →</button>
-
+    <button data-track="paths_take_quiz" id="pq-launch" type="button">Not sure yet? Take the quiz →</button>
     <p class="paths-hint">Click a path below to open it up — that's where the real detail lives.</p>
 
     <div class="paths">
@@ -850,6 +846,19 @@
         </div>
       </details>
       <details class="path-card">
+        <summary><span class="ptag">Path F</span><span class="ptitle">Transfer with your current company</span></summary>
+        <div class="path-body">
+        <p>If your company already has an office here, or is looking to expand into Japan, an internal transfer is the safest path there is — you keep your employer and your track record instead of starting a cold job search from scratch.</p>
+        <ul>
+          <li>How to actually check whether your company has a Japan presence — most people never ask</li>
+          <li>How to raise it internally without sounding like you're already halfway out the door</li>
+          <li>What a typical relocation package includes, so you know what's reasonable to ask for</li>
+          <li>What to expect if it moves forward — relocation support, timeline, visa handled through the company</li>
+          <li>An honest read on whether this door is even open for you — it isn't for everyone</li>
+        </ul>
+        </div>
+      </details>
+      <details class="path-card">
         <summary><span class="ptag">Path G</span><span class="ptitle">Study a degree, or intern, here</span></summary>
         <div class="path-body">
         <p>This goes further than Path E's language-school route — a full degree (a bachelor's exchange year, a Master's, or a PhD) and internships that plug into any of it. I went through study abroad myself, and I've since seen people combine these in all sorts of ways — study leading into an internship, an internship turning into a full-time offer, straight into a Master's, or all three back to back. I've also built up contacts on the school and internship side over the years, so where it makes sense, I can put you directly in front of them.</p>
@@ -860,19 +869,6 @@
           <li>Internships that plug into or replace a study stint — paid and unpaid, and what's realistic to land</li>
           <li>An introduction through my own contacts on the school or internship side, when it's a genuine fit</li>
           <li>Turning any of this into a long-term stay — the visa and job-hunt options once your program or internship ends</li>
-        </ul>
-        </div>
-      </details>
-      <details class="path-card">
-        <summary><span class="ptag">Path F</span><span class="ptitle">Transfer with your current company</span></summary>
-        <div class="path-body">
-        <p>If your company already has an office here, or is looking to expand into Japan, an internal transfer is the safest path there is — you keep your employer and your track record instead of starting a cold job search from scratch.</p>
-        <ul>
-          <li>How to actually check whether your company has a Japan presence — most people never ask</li>
-          <li>How to raise it internally without sounding like you're already halfway out the door</li>
-          <li>What a typical relocation package includes, so you know what's reasonable to ask for</li>
-          <li>What to expect if it moves forward — relocation support, timeline, visa handled through the company</li>
-          <li>An honest read on whether this door is even open for you — it isn't for everyone</li>
         </ul>
         </div>
       </details>
@@ -985,8 +981,7 @@
       <p class="result-desc" id="pq-result-secondary" style="margin-top:10px;"></p>
       <div class="result-bars" id="pq-bars"></div>
       <div class="result-ctas">
-        <a class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Book a call →</a>
-        <button class="retry-link" id="pq-retry">Retake the quiz</button>
+        <a data-track="quiz_result_book_call" class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Book a call →</a>        <button class="retry-link" id="pq-retry">Retake the quiz</button>
       </div>
       <div id="pq-result-product"></div>
 
@@ -1108,8 +1103,7 @@
           <li>Opens in Excel or Google Sheets, just fill in your numbers</li>
         </ul>
         <p style="font-size:12px;color:var(--text-dim);">This is the homework, not the negotiation itself. If you want to talk through what your numbers actually mean, <a href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">book the free 15-min call</a> after.</p>
-        <a class="btn btn-primary" href="https://notyoursensei.gumroad.com/l/salary-reality-check" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Get it on Gumroad →</a>
-      </div>
+        <a data-track="gumroad_salary_check" class="btn btn-primary" href="https://notyoursensei.gumroad.com/l/salary-reality-check" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Get it on Gumroad →</a>      </div>
       <div class="price-card featured">
         <div class="price-tag">instant download · excel &amp; google sheets</div>
         <div class="price-name" style="min-height:2.7em;">Japan Working Holiday Launch Kit</div>
@@ -1122,8 +1116,7 @@
           <li>Application roadmap, 90-day tracker, and a 30-day Japanese challenge with a plain-English JLPT breakdown, 14 tabs total</li>
         </ul>
         <p style="font-size:12px;color:var(--text-dim);">Already in Japan and thinking about the money side once you land? The salary check tool next to this one is built for exactly that.</p>
-        <a class="btn btn-primary" href="https://notyoursensei.gumroad.com/l/japan-working-holiday-launch-kit" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Get it on Gumroad →</a>
-      </div>
+        <a data-track="gumroad_working_holiday_kit" class="btn btn-primary" href="https://notyoursensei.gumroad.com/l/japan-working-holiday-launch-kit" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Get it on Gumroad →</a>      </div>
       <div class="price-card featured">
         <div class="price-tag">instant download · excel &amp; google sheets · 20 tabs</div>
         <div class="price-name" style="min-height:2.7em;">Japan Teacher's Exit Kit</div>
@@ -1137,8 +1130,7 @@
           <li>A Pivot Track with six realistic lanes, plus a Repatriate Track, 90-day action plan, and job tracker, opens in Excel or Google Sheets</li>
         </ul>
         <p style="font-size:12px;color:var(--text-dim);">This is the deciding tool. If it turns out you want to talk it through, owning this gets you <a href="#book" style="color:var(--gold);">15% off the Recon call</a>, email from the address you bought it with and we'll go from there.</p>
-        <a class="btn btn-primary" href="https://notyoursensei.gumroad.com/l/teachers-exit-kit" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Get it on Gumroad →</a>
-      </div>
+        <a data-track="gumroad_exit_kit" class="btn btn-primary" href="https://notyoursensei.gumroad.com/l/teachers-exit-kit" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Get it on Gumroad →</a>      </div>
     </div>
   </section>
 
@@ -1183,8 +1175,7 @@
           <li>No sales pitch — if a paid session isn't right for you yet, I'll say so</li>
         </ul>
         <p style="font-size:12px;color:var(--text-dim);">Held over video, whichever platform's easiest for you. No payment, no catch.</p>
-        <a class="btn btn-ghost" href="https://cal.com/notyoursensei/quick-chat" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Book this →</a>
-      </div>
+        <a data-track="book_quick_chat" class="btn btn-ghost" href="https://cal.com/notyoursensei/quick-chat" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Book this →</a>      </div>
       <div class="price-card featured">
         <div class="price-tag">single session</div>
         <div class="price-name">Recon call</div>
@@ -1198,8 +1189,7 @@
         <p style="font-size:12px;color:var(--text-dim);">Pays via PayPal. I'll email you within 24h to lock in a time. Not a fit? Full refund, no questions asked.</p>
         <!-- Flat product-owner discount (simplified from the old per-product tiered ratio, which asked buyers to do mental math mid-decision). Verified by email match, not a public link. -->
         <p style="font-size:12px;color:var(--text-dim);margin-top:2px;">Already own <a href="#products" style="color:var(--gold);">one of the tools above</a>? Take 15% off this call ($102) — email <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> from the same address you bought it with and we'll go from there.</p>
-        <a class="btn btn-primary" href="https://paypal.me/NotyourSensei/120USD" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Pay &amp; book →</a>
-      </div>
+        <a data-track="book_recon_call" class="btn btn-primary" href="https://paypal.me/NotyourSensei/120USD" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Pay &amp; book →</a>      </div>
       <div class="price-card">
         <div class="price-tag">3-session sprint</div>
         <div class="price-name">Transition sprint</div>
@@ -1213,8 +1203,7 @@
         <p style="font-size:12px;color:var(--text-dim);">Pays via PayPal. I'll email you within 24h to lock in a time. Not a fit? Full refund, no questions asked.</p>
         <!-- Flat product-owner discount (simplified from the old per-product tiered ratio, which asked buyers to do mental math mid-decision). Verified by email match, not a public link. -->
         <p style="font-size:12px;color:var(--text-dim);margin-top:2px;">Already own <a href="#products" style="color:var(--gold);">one of the tools above</a>? Take 10% off the sprint ($269) — email <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> from the same address you bought it with and we'll go from there.</p>
-        <a class="btn btn-primary" href="https://paypal.me/NotyourSensei/299USD" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Pay &amp; book →</a>
-      </div>
+        <a data-track="book_transition_sprint" class="btn btn-primary" href="https://paypal.me/NotyourSensei/299USD" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Pay &amp; book →</a>      </div>
     </div>
     <p style="font-size:13px;color:var(--text-dim);margin-top:14px;">If cost is a real barrier — student budget, between jobs, whatever the situation — email me and we'll figure something out.</p>
   </section>
@@ -1327,8 +1316,7 @@
         <p>A quick call to find out if this is actually the right route for you — no pitch, no pressure.</p>
         <p style="font-size:.82rem;color:var(--text-faint);margin-top:10px;">Prefer email? Write <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> <button type="button" class="copy-email-btn" onclick="copyEmail(this)" style="font-family:var(--mono);font-size:.76rem;color:var(--teal);background:none;border:1px solid rgba(111,173,163,0.35);border-radius:3px;padding:2px 8px;cursor:pointer;margin-left:4px;">copy</button></p>
       </div>
-      <a class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Book a call →</a>
-    </div>
+      <a data-track="footer_book_call" class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Book a call →</a>    </div>
 
     <p class="fine">
       "Not Your Sensei" is a pen name — the anonymity is on purpose, the
@@ -3180,6 +3168,26 @@
   gtag('js', new Date());
 
   gtag('config', 'G-WBNQS82FWT');
+</script>
+
+<!-- Funnel click tracking: fires a GA4 event on every real conversion step
+     (book a call, take the quiz, buy a tool, pay for a call), so drop-off
+     between stages (quick chat -> recon -> sprint, tool -> call) is visible
+     in GA4 as soon as there's real traffic, instead of only pageviews. -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var el = e.target.closest('[data-track]');
+    if (!el) return;
+    if (typeof gtag === 'function') {
+      gtag('event', 'cta_click', {
+        cta_id: el.getAttribute('data-track'),
+        cta_text: (el.textContent || '').trim().slice(0, 80),
+        page_path: location.pathname
+      });
+    }
+  }, true);
+})();
 </script>
 
 </body>
