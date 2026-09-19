@@ -544,6 +544,27 @@
   #path-quiz .quiz-disclaimer{
     font-size:.8rem; color:var(--text-faint); margin-top:16px;
   }
+  #path-quiz .pq-closing{
+    margin-top:24px; padding-top:18px; border-top:1px solid var(--border-soft);
+    font-size:.85rem; color:var(--text-dim); line-height:1.6;
+  }
+  #path-quiz .pq-closing a{ color:var(--teal); font-weight:600; }
+  #path-quiz .pq-studyinfo{
+    margin-top:16px; padding:16px 18px; border:1px solid var(--border);
+    border-radius:8px; background:var(--navy-raised);
+  }
+  #path-quiz .pq-studyinfo h4{
+    font-family:var(--sans); font-size:.86rem; font-weight:700;
+    color:var(--cream); margin-bottom:10px;
+  }
+  #path-quiz .pq-studyinfo dl{ margin:0; display:flex; flex-direction:column; gap:10px; }
+  #path-quiz .pq-studyinfo dt{
+    font-family:var(--mono); font-size:.74rem; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--gold-deep); margin-bottom:2px;
+  }
+  #path-quiz .pq-studyinfo dd{ margin:0; font-size:.85rem; color:var(--text-dim); line-height:1.55; }
+  #path-quiz .pq-studyinfo .src{ font-size:.72rem; color:var(--text-faint); margin-top:10px; }
+  #path-quiz .pq-studyinfo .src a{ color:var(--text-faint); }
   #path-quiz .quiz-result{ display:none; }
   #path-quiz .quiz-result.active{ display:block; }
   #path-quiz .quiz-live{ display:block; }
@@ -926,6 +947,7 @@
 
     <div class="quiz-result" id="pq-instatus-result">
       <div id="pq-instatus-body"></div>
+      <p class="pq-closing">Some people genuinely don't need the call — if the quiz gave you what you needed, that's a win. If it helped, following <a href="https://www.instagram.com/notyoursensei1/" target="_blank" rel="noopener noreferrer">@notyoursensei1</a> or sending quick feedback to <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> means more than a 5-star review.</p>
     </div>
 
     <div class="quiz-result" id="pq-home-result">
@@ -939,6 +961,7 @@
         <a class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Talk it through →</a>
         <button class="retry-link" id="pq-home-retry">Retake the quiz</button>
       </div>
+      <p class="pq-closing">Some people genuinely don't need the call — if the quiz gave you what you needed, that's a win. If it helped, following <a href="https://www.instagram.com/notyoursensei1/" target="_blank" rel="noopener noreferrer">@notyoursensei1</a> or sending quick feedback to <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> means more than a 5-star review.</p>
     </div>
 
     <div class="quiz-result" id="pq-pivot-result">
@@ -955,6 +978,7 @@
       <p class="result-desc">Good problem to have — you already flagged it's something specific. Pick the one closest to it below.</p>
       <div class="quiz-opts" id="pq-itoutcome-opts"></div>
       <div id="pq-itoutcome-body" hidden></div>
+      <p class="pq-closing">Some people genuinely don't need the call — if the quiz gave you what you needed, that's a win. If it helped, following <a href="https://www.instagram.com/notyoursensei1/" target="_blank" rel="noopener noreferrer">@notyoursensei1</a> or sending quick feedback to <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> means more than a 5-star review.</p>
     </div>
 
     <div class="quiz-result" id="pq-settling-result">
@@ -963,6 +987,7 @@
       <p class="result-desc">Normal, and usually not a big deal either way. What's actually going on?</p>
       <div class="quiz-opts" id="pq-settling-opts"></div>
       <div id="pq-settling-body" hidden></div>
+      <p class="pq-closing">Some people genuinely don't need the call — if the quiz gave you what you needed, that's a win. If it helped, following <a href="https://www.instagram.com/notyoursensei1/" target="_blank" rel="noopener noreferrer">@notyoursensei1</a> or sending quick feedback to <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> means more than a 5-star review.</p>
     </div>
 
     <div class="quiz-result" id="pq-partner-result">
@@ -970,6 +995,7 @@
       <h3 class="result-title">Good reason to go. Let's not let the job search get skipped.</h3>
       <p class="result-desc">The visa and the job are two separate problems. A partner can solve the first one — nobody solves the second one for you. A few quick questions so this doesn't come back as a generic answer.</p>
       <div id="pq-partner-body"></div>
+      <p class="pq-closing">Some people genuinely don't need the call — if the quiz gave you what you needed, that's a win. If it helped, following <a href="https://www.instagram.com/notyoursensei1/" target="_blank" rel="noopener noreferrer">@notyoursensei1</a> or sending quick feedback to <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> means more than a 5-star review.</p>
     </div>
 
     <div class="quiz-result" id="pq-result">
@@ -979,6 +1005,20 @@
       <p class="result-why" id="pq-result-why"></p>
       <p class="result-why" id="pq-result-forward" style="margin-top:2px;"></p>
       <p class="result-desc" id="pq-result-secondary" style="margin-top:10px;"></p>
+
+      <div class="pq-studyinfo" id="pq-result-studyinfo" hidden>
+        <h4>Degree level basics — pick the one that fits your plan</h4>
+        <dl>
+          <dt>Associate (junior college / 短大)</dt>
+          <dd>2 years — the fastest, cheapest foot in the door. Dedicated scholarships are thin at this level; most people self-fund or use JASSO's general grant (~¥48,000/mo) once already enrolled.</dd>
+          <dt>Bachelor's</dt>
+          <dd>4 years typical. The MEXT Undergraduate Scholarship covers tuition + ~¥117,000/mo + flights, but it's competitive (embassy or university-recommended). Fallback: JASSO's grant once enrolled, or self-fund (private tuition capped around ¥535,800/yr).</dd>
+          <dt>Master's / PhD</dt>
+          <dd>2–3 years (Master's), 3 years (PhD). The MEXT Graduate Scholarship is the best-funded of the three if you land it — tuition covered + ~¥143,000–145,000/mo + flights. Usually needs a professor's sponsorship lined up before you apply.</dd>
+        </dl>
+        <p class="src">General guide, not financial advice — figures change yearly; confirm current amounts on <a href="https://www.studyinjapan.go.jp/en/planning/scholarships/" target="_blank" rel="noopener noreferrer">Study in Japan</a> or <a href="https://www.jasso.go.jp/en/ryugaku/scholarship_j/index.html" target="_blank" rel="noopener noreferrer">JASSO</a> before deciding anything.</p>
+      </div>
+
       <div class="result-bars" id="pq-bars"></div>
       <div class="result-ctas">
         <a data-track="quiz_result_book_call" class="btn btn-primary" href="https://cal.com/notyoursensei" target="_blank" rel="noopener noreferrer">Book a call →</a>        <button class="retry-link" id="pq-retry">Retake the quiz</button>
@@ -991,6 +1031,8 @@
         <div class="quiz-opts" id="pq-bonus-opts"></div>
         <p class="quiz-q pq-bonus-q" id="pq-bonus-reaction" hidden></p>
       </div>
+
+      <p class="pq-closing">Some people genuinely don't need the call — if the quiz gave you what you needed, that's a win. If it helped, following <a href="https://www.instagram.com/notyoursensei1/" target="_blank" rel="noopener noreferrer">@notyoursensei1</a> or sending quick feedback to <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> means more than a 5-star review.</p>
     </div>
   </div>
 </section>
@@ -1142,7 +1184,7 @@
     <div class="results-grid">
       <div class="result-card">
         <div class="result-path">English teacher (Kanagawa) <span class="arrow">→</span> Network Engineer</div>
-        <p class="result-detail">Built a home lab, passed the CCNA, moved into a hands-on network engineering role. Found out it landed when she added me on LinkedIn with the new title already up.</p>
+        <p class="result-detail">Built a home lab, passed the CCNA, and moved into a hands-on network engineering role, going from a low teaching salary to around ¥5,000,000. Found out it landed when she added me on LinkedIn with the new title already up.</p>
       </div>
       <div class="result-card">
         <div class="result-path">Client <span class="arrow">→</span> Joined my own team</div>
@@ -1159,7 +1201,7 @@
     <div class="eyebrow">rates &amp; what's included</div>
     <h2>Book a session</h2>
     <p class="dek">These are the rates for now, while I'm still taking these calls straight off the podcast. Prices are listed in USD — PayPal converts automatically to yen or whatever currency you use, so you don't need a USD account to pay.</p>
-    <p class="dek" style="margin-top:-6px;">Full refund, no questions asked, if it's not a fit. Payment goes straight through PayPal — I never see or store your card details. And yes, "Not Your Sensei" is a pen name, not a mask: ask me to verify the timeline and credentials on the free chat before you pay for anything.</p>
+    <p class="dek" style="margin-top:-6px;">Full refund, no questions asked, on the Recon call if it's not a fit. Payment goes straight through PayPal — I never see or store your card details. And yes, "Not Your Sensei" is a pen name, not a mask: ask me to verify the timeline and credentials on the free chat before you pay for anything.</p>
 
     <div class="price-cards">
       <div class="price-card">
@@ -1175,18 +1217,20 @@
           <li>No sales pitch — if a paid session isn't right for you yet, I'll say so</li>
         </ul>
         <p style="font-size:12px;color:var(--text-dim);">Held over video, whichever platform's easiest for you. No payment, no catch.</p>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:2px;">I do this alongside a full-time network engineering job, so I only take a handful of these a week. If a slot's gone, it's gone until next week.</p>
         <a data-track="book_quick_chat" class="btn btn-ghost" href="https://cal.com/notyoursensei/quick-chat" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Book this →</a>      </div>
       <div class="price-card featured">
         <div class="price-tag">single session</div>
         <div class="price-name">Recon call</div>
         <div class="price-amt">$120 <span>/ 45 min</span></div>
+        <p style="font-size:12.5px;color:var(--text-dim);margin:-6px 0 0;">Four things for one price. $120 total, nothing else to buy.</p>
         <ul>
           <li>Live call, 45 minutes</li>
           <li>Written summary and action plan after</li>
           <li>One follow-up email, plus a short check-in call afterward</li>
           <li>Good if you're still deciding between paths</li>
         </ul>
-        <p style="font-size:12px;color:var(--text-dim);">Pays via PayPal. I'll email you within 24h to lock in a time. Not a fit? Full refund, no questions asked.</p>
+        <p style="font-size:12px;color:var(--text-dim);">Pays via PayPal. I'll email you within 24h to lock in a time.</p>
         <!-- Flat product-owner discount (simplified from the old per-product tiered ratio, which asked buyers to do mental math mid-decision). Verified by email match, not a public link. -->
         <p style="font-size:12px;color:var(--text-dim);margin-top:2px;">Already own <a href="#products" style="color:var(--gold);">one of the tools above</a>? Take 15% off this call ($102) — email <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> from the same address you bought it with and we'll go from there.</p>
         <a data-track="book_recon_call" class="btn btn-primary" href="https://paypal.me/NotyourSensei/120USD" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Pay &amp; book →</a>      </div>
@@ -1200,7 +1244,8 @@
           <li>One mock interview</li>
           <li>Best for "I want real forward motion inside 90 days"</li>
         </ul>
-        <p style="font-size:12px;color:var(--text-dim);">Pays via PayPal. I'll email you within 24h to lock in a time. Not a fit? Full refund, no questions asked.</p>
+        <p style="font-size:12px;color:var(--text-dim);">Pays via PayPal. I'll email you within 24h to lock in a time.</p>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:2px;">Usually booked after a Recon call, once we already know it's the right next step.</p>
         <!-- Flat product-owner discount (simplified from the old per-product tiered ratio, which asked buyers to do mental math mid-decision). Verified by email match, not a public link. -->
         <p style="font-size:12px;color:var(--text-dim);margin-top:2px;">Already own <a href="#products" style="color:var(--gold);">one of the tools above</a>? Take 10% off the sprint ($269) — email <span class="mono" style="color:var(--gold);">contact@notyoursensei.com</span> from the same address you bought it with and we'll go from there.</p>
         <a data-track="book_transition_sprint" class="btn btn-primary" href="https://paypal.me/NotyourSensei/299USD" target="_blank" rel="noopener noreferrer" style="margin-top:auto;">Pay &amp; book →</a>      </div>
@@ -2003,6 +2048,7 @@
     document.getElementById('pq-result-why').innerHTML = whyText ? `<strong>${top.name}</strong> — ${whyText}` : `<strong>${top.name}</strong>`;
     document.getElementById('pq-result-forward').textContent = forwardLooks[key] || '';
     document.getElementById('pq-result-secondary').innerHTML = secondaryHtml || '';
+    document.getElementById('pq-result-studyinfo').hidden = (key !== 'G');
     document.getElementById('pq-bars').innerHTML = '';
     setResultProduct(productHtml || '');
     renderBonus();
@@ -3085,6 +3131,8 @@
     } else {
       setResultProduct('');
     }
+
+    document.getElementById('pq-result-studyinfo').hidden = (topKey !== 'G');
 
     const barsEl = document.getElementById('pq-bars');
     barsEl.innerHTML = '';
